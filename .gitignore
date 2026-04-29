@@ -1,0 +1,71 @@
+# --- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Virtual environments -------------------------------------------------
+.venv/
+venv/
+env/
+.conda/
+
+# --- Jupyter --------------------------------------------------------------
+.ipynb_checkpoints/
+
+# --- IDE / editor ---------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- OS -------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Secrets / env --------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# --- Project-specific outputs --------------------------------------------
+# Raw / intermediate data should not be committed; the dataset itself lives
+# outside this repo at C:\Users\user\data\AICRC_DSQ_Data(Combined_segmented)_v2.
+data/
+datasets/
+
+# Manifests, features, predictions, captions
+manifests/
+features/
+predictions/
+captions/
+cache/
+
+# Training runs / checkpoints / logs
+runs/
+checkpoints/
+logs/
+wandb/
+mlruns/
+outputs/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.h5
+
+# Large CSV / parquet artifacts (keep small reports under reports/)
+*.parquet
+*.feather
+
+# --- Reports --------------------------------------------------------------
+# reports/ IS committed (audit deliverables). Ignore only transient files.
+reports/_tmp/
+reports/*.bak

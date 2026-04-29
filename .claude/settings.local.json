@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pdftotext -layout \"/c/Users/user/data/AICRC_DSQ_Data\\(Combined_segmented\\)_v2/Fine-Grained Motion Recognition in At-Home Fitness.pdf\" /tmp/paper.txt)",
+      "Read(//tmp/**)",
+      "Bash(xargs head *)",
+      "Bash(awk '{print NF; exit}' \"/c/Users/user/data/AICRC_DSQ_Data\\(Combined_segmented\\)_v2/AICRC_DSQ_Data\\(Combined_segmented\\)/C1/01_Straight_Arms/Combined/EP02_Straight_Arms_C1_SW_combine.txt\")",
+      "Bash(awk '{print NF; exit}' \"/c/Users/user/data/AICRC_DSQ_Data\\(Combined_segmented\\)_v2/AICRC_DSQ_Data\\(Combined_segmented\\)/C1/01_Straight_Arms/Segmented/seg_EP01_Straight_Arms_C1_SW_combine/file_2021_10_01_16_06_26_1_o0.txt\")",
+      "Bash(python *)",
+      "Read(//c/c/Users/user/Docker/AICRC_v2/reports/**)"
+    ]
+  }
+}

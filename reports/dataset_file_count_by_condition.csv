@@ -1,0 +1,19 @@
+class,class_description,arm_posture,arm_posture_canonical,arm_posture_label,data_type,file_count,example_file
+C1,Normal,01_Straight_Arms,SA,SA (canonical) / AS (legacy script) - Figure 3 (a) straight arms,Segmented,52,seg_EP01_Straight_Arms_C1_SW_combine
+C1,Normal,02_Crossed_Arms,CA,CA (canonical) / AC (legacy script) - Figure 3 (b) crossed arms,Segmented,52,seg_EP01_Crossed_Arms_C1_SW_combine
+C1,Normal,03_Hands_on_Waist,HW,HW (canonical) / AW (legacy script) - Figure 3 (c) hands on waist,Segmented,52,seg_EP01_Hands_on_Waist_C1_SW_combine
+C2,Insufficient depth,01_Straight_Arms,SA,SA (canonical) / AS (legacy script) - Figure 3 (a) straight arms,Segmented,52,seg_EP01_Straight_Arms_C2_SW_combine
+C2,Insufficient depth,02_Crossed_Arms,CA,CA (canonical) / AC (legacy script) - Figure 3 (b) crossed arms,Segmented,52,seg_EP01_Crossed_Arms_C2_SW_combine
+C2,Insufficient depth,03_Hands_on_Waist,HW,HW (canonical) / AW (legacy script) - Figure 3 (c) hands on waist,Segmented,52,seg_EP01_Hands_on_Waist_C2_SW_combine
+C3,Insufficient depth with posterior tilting and knee valgus,01_Straight_Arms,SA,SA (canonical) / AS (legacy script) - Figure 3 (a) straight arms,Segmented,52,seg_EP01_Straight_Arms_C3_SW_combine
+C3,Insufficient depth with posterior tilting and knee valgus,02_Crossed_Arms,CA,CA (canonical) / AC (legacy script) - Figure 3 (b) crossed arms,Segmented,52,seg_EP01_Crossed_Arms_C3_SW_combine
+C3,Insufficient depth with posterior tilting and knee valgus,03_Hands_on_Waist,HW,HW (canonical) / AW (legacy script) - Figure 3 (c) hands on waist,Segmented,52,seg_EP01_Hands_on_Waist_C3_SW_combine
+C4,Left-knee valgus,01_Straight_Arms,SA,SA (canonical) / AS (legacy script) - Figure 3 (a) straight arms,Segmented,52,seg_EP01_Straight_Arms_C4_SW_combine
+C4,Left-knee valgus,02_Crossed_Arms,CA,CA (canonical) / AC (legacy script) - Figure 3 (b) crossed arms,Segmented,51,seg_EP01_Crossed_Arms_C4_SW_combine
+C4,Left-knee valgus,03_Hands_on_Waist,HW,HW (canonical) / AW (legacy script) - Figure 3 (c) hands on waist,Segmented,52,seg_EP01_Hands_on_Waist_C4_SW_combine
+C5,Right-knee valgus,01_Straight_Arms,SA,SA (canonical) / AS (legacy script) - Figure 3 (a) straight arms,Segmented,52,seg_EP01_Straight_Arms_C5_SW_combine
+C5,Right-knee valgus,02_Crossed_Arms,CA,CA (canonical) / AC (legacy script) - Figure 3 (b) crossed arms,Segmented,52,seg_EP01_Crossed_Arms_C5_SW_combine
+C5,Right-knee valgus,03_Hands_on_Waist,HW,HW (canonical) / AW (legacy script) - Figure 3 (c) hands on waist,Segmented,52,seg_EP01_Hands_on_Waist_C5_SW_combine
+C6,Both-knee valgus,01_Straight_Arms,SA,SA (canonical) / AS (legacy script) - Figure 3 (a) straight arms,Segmented,52,seg_EP01_Straight_Arms_C6_SW_combine
+C6,Both-knee valgus,02_Crossed_Arms,CA,CA (canonical) / AC (legacy script) - Figure 3 (b) crossed arms,Segmented,52,seg_EP01_Crossed_Arms_C6_SW_combine
+C6,Both-knee valgus,03_Hands_on_Waist,HW,HW (canonical) / AW (legacy script) - Figure 3 (c) hands on waist,Segmented,52,seg_EP01_Hands_on_Waist_C6_SW_combine
