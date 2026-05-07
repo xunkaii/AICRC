@@ -1,4 +1,4 @@
-﻿# Step 4 Reboot Decision
+# Step 4 Reboot Decision
 
 - 작성일: 2026-05-08
 - 위치: reports/step4r/step4_reboot_decision.md
