@@ -1,0 +1,13 @@
+feature,method,n_valid,class_eta2,posture_eta2,class_eta2_pct_of_raw,posture_eta2_pct_of_raw
+motion_range_acc_z,raw,9275,0.111209,0.060706,1.000000,1.000000
+motion_range_acc_z,posture_train_zscore,9275,0.117106,0.000303,1.053024,0.004993
+motion_range_acc_z,posture_train_robust,9275,0.116468,0.001322,1.047286,0.021770
+motion_range_acc_z,participant_zscore_upper_bound,9275,0.157379,0.072136,1.415166,1.188283
+depth_proxy,raw,9275,0.004228,0.862299,1.000000,1.000000
+depth_proxy,posture_train_zscore,9275,0.030741,0.001889,7.270236,0.002191
+depth_proxy,posture_train_robust,9275,0.030258,0.004038,7.156099,0.004682
+depth_proxy,participant_zscore_upper_bound,9275,0.005240,0.912987,1.239362,1.058782
+bottom_recovery_slope_acc_z,raw,9275,0.005599,0.092393,1.000000,1.000000
+bottom_recovery_slope_acc_z,posture_train_zscore,9275,0.005921,0.000208,1.057582,0.002255
+bottom_recovery_slope_acc_z,posture_train_robust,9275,0.005850,0.006532,1.044874,0.070703
+bottom_recovery_slope_acc_z,participant_zscore_upper_bound,9275,0.005812,0.099662,1.038176,1.078681

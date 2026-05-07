@@ -1,0 +1,10 @@
+setting,split,n_high_grp,c1_c5_c6_internal_confusion_rate,n_med_pair,c3_c4_pair_confusion_rate,n_c2,c2_recall
+raw_core_features,train,3216,0.388060,2120,0.087736,1076,0.528810
+raw_core_features,val,720,0.343056,476,0.077731,240,0.658333
+raw_core_features,test,715,0.272727,473,0.109937,239,0.732218
+posture_train_zscore_core_features,train,3216,0.388682,2120,0.084906,1076,0.541822
+posture_train_zscore_core_features,val,720,0.352778,476,0.056723,240,0.679167
+posture_train_zscore_core_features,test,715,0.272727,473,0.107822,239,0.765690
+posture_train_robust_core_features,train,3216,0.391169,2120,0.087264,1076,0.541822
+posture_train_robust_core_features,val,720,0.347222,476,0.060924,240,0.675000
+posture_train_robust_core_features,test,715,0.268531,473,0.105708,239,0.753138

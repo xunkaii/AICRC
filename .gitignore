@@ -69,3 +69,13 @@ outputs/
 # reports/ IS committed (audit deliverables). Ignore only transient files.
 reports/_tmp/
 reports/*.bak
+
+
+# --- Claude -------------------------------------------------------------
+.claude/
+
+# --- Obsidian -------------------------------------------------------------
+.obsidian/
+
+# --- Docker -------------------------------------------------------------
+.docker/

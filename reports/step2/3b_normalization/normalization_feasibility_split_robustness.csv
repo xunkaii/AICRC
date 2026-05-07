@@ -1,0 +1,13 @@
+feature,method,train_n,train_mean,train_std,val_n,val_mean,val_std,test_n,test_mean,test_std,mean_range,rel_mean_range,flag_unstable,rule
+motion_range_acc_z,raw,6412,4.944066,1.585574,1436,4.749981,1.516230,1427,4.662575,1.393231,0.281491,0.058821,False,raw_relative_>0.20
+motion_range_acc_z,posture_train_zscore,6412,-0.000000,1.000000,1436,-0.125866,0.927903,1427,-0.179413,0.934982,0.179413,1.763104,False,normalized_absolute_>0.20
+motion_range_acc_z,posture_train_robust,6412,0.069844,0.976838,1436,-0.050530,0.906351,1427,-0.106114,0.914777,0.175958,6.081543,False,normalized_absolute_>0.20
+motion_range_acc_z,participant_zscore_upper_bound,6412,0.000000,1.000000,1436,0.000000,1.000000,1427,-0.000000,1.000000,0.000000,,False,normalized_absolute_>0.20
+depth_proxy,raw,6412,4.914750,4.170634,1436,5.393428,3.755717,1427,5.275060,3.829603,0.478677,0.092152,False,raw_relative_>0.20
+depth_proxy,posture_train_zscore,6412,-0.000000,1.000000,1436,0.288643,0.861007,1427,0.211964,0.843440,0.288643,1.729758,True,normalized_absolute_>0.20
+depth_proxy,posture_train_robust,6412,-0.013326,1.128611,1436,0.302916,0.978957,1427,0.217709,0.959735,0.316242,1.870148,True,normalized_absolute_>0.20
+depth_proxy,participant_zscore_upper_bound,6412,0.000000,1.000000,1436,-0.000000,1.000000,1427,-0.000000,1.000000,0.000000,,False,normalized_absolute_>0.20
+bottom_recovery_slope_acc_z,raw,6412,0.110472,0.127153,1436,0.104162,0.117155,1427,0.090048,0.113955,0.020424,0.201097,True,raw_relative_>0.20
+bottom_recovery_slope_acc_z,posture_train_zscore,6412,0.000000,1.000000,1436,-0.051173,0.921361,1427,-0.183979,0.852281,0.183979,2.347150,False,normalized_absolute_>0.20
+bottom_recovery_slope_acc_z,posture_train_robust,6412,0.128941,1.184733,1436,0.074466,1.094050,1427,-0.088712,1.011481,0.217653,5.692973,True,normalized_absolute_>0.20
+bottom_recovery_slope_acc_z,participant_zscore_upper_bound,6412,0.000000,1.000000,1436,0.000000,1.000000,1427,-0.000000,1.000000,0.000000,,False,normalized_absolute_>0.20
