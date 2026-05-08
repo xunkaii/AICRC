@@ -100,7 +100,7 @@ def _load_csv(name: str, path: Path) -> pd.DataFrame:
         raise FileNotFoundError(
             f"Required input '{name}' not found at: {path}"
         )
-    df = pd.read_csv(path)
+    df = pd.read_csv(path, encoding="utf-8-sig")
     print(f"[load] {name}: {len(df)} rows  (path={path})")
     print(f"       columns ({len(df.columns)}): {list(df.columns)}")
     return df
@@ -470,7 +470,7 @@ def main() -> int:
 
     # 14. Save.
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    out.to_csv(OUTPUT_FILE, index=False)
+    out.to_csv(OUTPUT_FILE, index=False, encoding="utf-8-sig")
 
     # 15. Console summary.
     print()

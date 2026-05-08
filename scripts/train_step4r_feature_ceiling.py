@@ -937,7 +937,7 @@ def main() -> int:
     print("=" * 64)
     if not INPUT_FILE.exists():
         raise FileNotFoundError(f"Input dataset not found: {INPUT_FILE}.")
-    df = pd.read_csv(INPUT_FILE)
+    df = pd.read_csv(INPUT_FILE, encoding="utf-8-sig")
     print(f"loaded {len(df)} rows from {INPUT_FILE}")
     _check_dataset(df)
 
@@ -954,11 +954,11 @@ def main() -> int:
         print(f"condition: {condition}")
         print("-" * 64)
         pred_df = _train_and_predict(df, condition)
-        pred_df.to_csv(OUTPUT_PRED[condition], index=False)
+        pred_df.to_csv(OUTPUT_PRED[condition], index=False, encoding="utf-8-sig")
         print(f"[{condition}] saved predictions -> {OUTPUT_PRED[condition]}")
 
         schema_df = _generate_schema_outputs(pred_df, condition)
-        schema_df.to_csv(OUTPUT_SCHEMA[condition], index=False)
+        schema_df.to_csv(OUTPUT_SCHEMA[condition], index=False, encoding="utf-8-sig")
         print(f"[{condition}] saved schema outputs -> {OUTPUT_SCHEMA[condition]}")
 
         metrics_by_cond[condition] = _evaluate_all(pred_df)
@@ -974,11 +974,11 @@ def main() -> int:
             )
 
     metrics_df = _flatten_metrics(metrics_by_cond)
-    metrics_df.to_csv(OUTPUT_METRICS_CSV, index=False)
+    metrics_df.to_csv(OUTPUT_METRICS_CSV, index=False, encoding="utf-8-sig")
     print(f"saved metrics -> {OUTPUT_METRICS_CSV}")
 
     confusion_df = pd.concat(confusion_frames, axis=0, ignore_index=True)
-    confusion_df.to_csv(OUTPUT_CONFUSION_CSV, index=False)
+    confusion_df.to_csv(OUTPUT_CONFUSION_CSV, index=False, encoding="utf-8-sig")
     print(f"saved confusion -> {OUTPUT_CONFUSION_CSV}")
 
     md = _markdown_report(metrics_by_cond, schema_summary)

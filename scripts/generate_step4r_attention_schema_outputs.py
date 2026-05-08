@@ -122,7 +122,7 @@ def _load_anchor_join(sample_ids: np.ndarray) -> pd.DataFrame:
     """Return DataFrame indexed by sample_id with anchor_reliability and anchor_type."""
     if not INPUT_ANCHOR_CSV.exists():
         raise FileNotFoundError(f"Anchor source not found: {INPUT_ANCHOR_CSV}")
-    df = pd.read_csv(INPUT_ANCHOR_CSV, usecols=["sample_id", "anchor_reliability", "anchor_type"])
+    df = pd.read_csv(INPUT_ANCHOR_CSV, usecols=["sample_id", "anchor_reliability", "anchor_type"], encoding="utf-8-sig")
     df = df.set_index("sample_id")
     missing = sorted(set(sample_ids) - set(df.index))
     if missing:
@@ -623,12 +623,12 @@ def main() -> int:
     print("building schema CSV ...")
     schema_df = _build_schema_df(d, anchor_df, thr)
     _validate_schema(schema_df)
-    schema_df.to_csv(OUTPUT_SCHEMA_CSV, index=False)
+    schema_df.to_csv(OUTPUT_SCHEMA_CSV, index=False, encoding="utf-8-sig")
     print(f"saved schema CSV -> {OUTPUT_SCHEMA_CSV}")
 
     print("building summary ...")
     summary = _build_summary(schema_df)
-    summary.to_csv(OUTPUT_SUMMARY_CSV, index=False)
+    summary.to_csv(OUTPUT_SUMMARY_CSV, index=False, encoding="utf-8-sig")
     print(f"saved summary -> {OUTPUT_SUMMARY_CSV}")
 
     md = _markdown_report(schema_df, thr, d["temperature"])

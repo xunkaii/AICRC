@@ -421,7 +421,7 @@ def main() -> int:
     failures: list = []
 
     for cond, path in INPUT_FILES.items():
-        df = pd.read_csv(path)
+        df = pd.read_csv(path, encoding="utf-8-sig")
         thr = THRESHOLDS[cond]
         print(f"\n[{cond}] loaded {len(df)} rows from {path}")
         print(

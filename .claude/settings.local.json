@@ -24,7 +24,19 @@
       "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -X utf8 scripts/analyze_step4r_attention_phase.py)",
       "PowerShell(New-Item *)",
       "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' -X utf8 -c \"import json; data = json.load\\(open\\('reports/step6_v2/step6_v2_golden_test_cases.json', encoding='utf-8'\\)\\); print\\(f'JSON valid: {len\\(data\\)} cases'\\); print\\('case ids:'\\); [print\\(f'  {c[\\\\\"case_id\\\\\"]}'\\) for c in data]\"; Write-Output \"\"; Write-Output \"=== reports/step6_v2 contents ===\"; Get-ChildItem 'reports\\\\step6_v2' -File | Select-Object Name,Length | Format-Table -AutoSize)",
-      "Bash(/c/Users/user/anaconda3/envs/aicrc_step4/python.exe *)"
+      "Bash(/c/Users/user/anaconda3/envs/aicrc_step4/python.exe *)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' -X utf8 scripts/generate_step7_v2_captions.py --mode golden --provider mock)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' -X utf8 scripts/validate_step7_v2_captions.py --input data/step7_v2/step7_v2_golden_captions.csv --mode golden)",
+      "PowerShell(if \\($env:ANTHROPIC_API_KEY\\) { Write-Output \"ANTHROPIC_API_KEY: SET \\(len=$\\($env:ANTHROPIC_API_KEY.Length\\)\\)\" } else { Write-Output \"ANTHROPIC_API_KEY: not set\" }; if \\($env:OPENAI_API_KEY\\) { Write-Output \"OPENAI_API_KEY: SET\" } else { Write-Output \"OPENAI_API_KEY: not set\" }; & 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -X utf8 -c \"try:`n  import anthropic; print\\('anthropic SDK installed:', anthropic.__version__\\)`nexcept ImportError as e: print\\('anthropic SDK not installed'\\)\")",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' -X utf8 scripts/generate_step7_v2_captions.py --mode full --provider mock)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' -X utf8 scripts/validate_step7_v2_captions.py --input data/step7_v2/step7_v2_captions.csv --mode full)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' scripts/generate_step7_v2_captions.py --mode golden --provider mock --limit 3)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -m pip install --quiet anthropic; & 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -c \"import anthropic; print\\('anthropic', anthropic.__version__\\)\")",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' scripts/generate_step7_v2_captions.py --mode golden --provider anthropic)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' -c \"import importlib.util; spec = importlib.util.spec_from_file_location\\('g', 'scripts/generate_step7_v2_captions.py'\\); m = importlib.util.module_from_spec\\(spec\\); spec.loader.exec_module\\(m\\); print\\('generate import OK, PYTHONIOENCODING=', m.os.environ.get\\('PYTHONIOENCODING'\\)\\)\"; & 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' -c \"import importlib.util; spec = importlib.util.spec_from_file_location\\('v', 'scripts/validate_step7_v2_captions.py'\\); m = importlib.util.module_from_spec\\(spec\\); spec.loader.exec_module\\(m\\); print\\('validate import OK, PYTHONIOENCODING=', m.os.environ.get\\('PYTHONIOENCODING'\\)\\)\")",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' scripts/_apply_utf8_sig.py)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' scripts/generate_step7_v2_captions.py --mode golden --provider mock --limit 5)",
+      "Bash(rm \"/c/Users/user/Docker/AICRC_v2/scripts/_apply_utf8_sig.py\")"
     ]
   },
   "mcpServers": {

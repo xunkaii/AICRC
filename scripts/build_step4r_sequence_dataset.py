@@ -459,7 +459,7 @@ def main() -> int:
     print("=" * 64)
     if not INPUT_MANIFEST.exists():
         raise FileNotFoundError(f"Manifest not found: {INPUT_MANIFEST}")
-    df = pd.read_csv(INPUT_MANIFEST)
+    df = pd.read_csv(INPUT_MANIFEST, encoding="utf-8-sig")
     print(f"loaded {len(df)} manifest rows from {INPUT_MANIFEST}")
     _check_manifest(df)
 
@@ -502,7 +502,7 @@ def main() -> int:
             "reason",
         ],
     )
-    failures_df.to_csv(OUTPUT_FAILURES_CSV, index=False)
+    failures_df.to_csv(OUTPUT_FAILURES_CSV, index=False, encoding="utf-8-sig")
     print(f"saved failures csv -> {OUTPUT_FAILURES_CSV}")
 
     md = _markdown_summary(len(df), checks, len(failures), failures)

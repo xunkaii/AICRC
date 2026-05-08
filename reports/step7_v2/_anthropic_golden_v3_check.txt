@@ -1,0 +1,19 @@
+=== no_call cases (now must include posture phrase) ===
+[EP01_C2_SA_rep01] posture=SA, level=no_call
+  caption: 팔을 앞으로 둔 자세에서 측정된 신호는 현재 손목 센서만으로는 안정적인 설명을 제공하기 어렵습니다.
+
+[EP03_C1_SA_rep09] posture=SA, level=no_call
+  caption: 팔을 앞으로 둔 자세에서 측정된 신호는 현재 손목 센서만으로는 안정적인 설명을 제공하기 어렵습니다.
+
+=== "관찰" 단어 사용 검사 ===
+  no occurrence — "관찰됩니다" forbidden 정상 작동
+
+=== hedged/low caption sample ("나타납니다" 단독 단정 회피 확인) ===
+[EP01_C1_SA_rep06] level=hedged
+  caption: 팔을 앞으로 둔 자세에서 깊이 부족 계열로 해석 가능한 신호가 나타납니다. 다만 동작 기준점이 불안정하여 설명 신뢰도가 낮습니다. 손목 센서 기준의 추정이므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오.
+
+[EP01_C1_CA_rep02] level=hedged
+  caption: 팔을 교차한 자세에서 측정된 신호는 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호로 보입니다. 손목 센서 기준의 추정이므로, 단일 유형으로 좁히기 어렵습니다.
+
+[EP01_C1_CA_rep01] level=low
+  caption: 팔을 교차한 자세에서 측정된 신호는 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호입니다. 동작 기준점이 불안정하여 설명 신뢰도가 낮으며, 후보군 수준으로만 해석하는 것이 적절합니다.

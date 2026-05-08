@@ -275,9 +275,9 @@ def main() -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 
     print("Loading Step 8-1 review sample CSVs (read-only)")
-    raw = pd.read_csv(INPUT_FILES["raw"])
-    zs = pd.read_csv(INPUT_FILES["zscore"])
-    paired = pd.read_csv(INPUT_FILES["paired"])
+    raw = pd.read_csv(INPUT_FILES["raw"], encoding="utf-8-sig")
+    zs = pd.read_csv(INPUT_FILES["zscore"], encoding="utf-8-sig")
+    paired = pd.read_csv(INPUT_FILES["paired"], encoding="utf-8-sig")
     print(f"  raw rows: {len(raw)}")
     print(f"  zscore rows: {len(zs)}")
     print(f"  paired rows: {len(paired)}")
@@ -333,9 +333,9 @@ def main() -> None:
           f"paired={len(paired_audit)}")
 
     # Reviewer-empty re-check from disk (sanity)
-    raw_check = pd.read_csv(BLINDED_FILES["raw"])
-    zs_check = pd.read_csv(BLINDED_FILES["zscore"])
-    paired_check = pd.read_csv(BLINDED_FILES["paired"])
+    raw_check = pd.read_csv(BLINDED_FILES["raw"], encoding="utf-8-sig")
+    zs_check = pd.read_csv(BLINDED_FILES["zscore"], encoding="utf-8-sig")
+    paired_check = pd.read_csv(BLINDED_FILES["paired"], encoding="utf-8-sig")
     raw_empty = all(
         raw_check[c].apply(lambda v: is_empty(v)).all()
         for c in BRANCH_REVIEWER_COLS

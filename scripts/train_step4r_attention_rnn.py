@@ -513,7 +513,7 @@ def _load_hgb_test_metrics() -> dict:
     """Return dict[condition][metric] = value, restricted to test split, for §3."""
     if not HGB_METRICS_CSV.exists():
         return {}
-    df = pd.read_csv(HGB_METRICS_CSV)
+    df = pd.read_csv(HGB_METRICS_CSV, encoding="utf-8-sig")
     out: dict = {}
     df = df.loc[df["split"] == "test"]
     for cond in ["raw", "zscore"]:
@@ -826,7 +826,7 @@ def main() -> int:
     history = _train(model, train_loader, val_loader, device)
 
     log_df = pd.DataFrame(history)
-    log_df.to_csv(OUTPUT_TRAIN_LOG_CSV, index=False)
+    log_df.to_csv(OUTPUT_TRAIN_LOG_CSV, index=False, encoding="utf-8-sig")
     print(f"saved training log -> {OUTPUT_TRAIN_LOG_CSV}")
 
     print()
@@ -878,15 +878,15 @@ def main() -> int:
         )
 
     pred_df = pd.DataFrame(pred_rows)
-    pred_df.to_csv(OUTPUT_PREDS, index=False)
+    pred_df.to_csv(OUTPUT_PREDS, index=False, encoding="utf-8-sig")
     print(f"saved predictions -> {OUTPUT_PREDS}")
 
     metrics_df = _flatten_metrics(metrics_by_split)
-    metrics_df.to_csv(OUTPUT_METRICS_CSV, index=False)
+    metrics_df.to_csv(OUTPUT_METRICS_CSV, index=False, encoding="utf-8-sig")
     print(f"saved metrics -> {OUTPUT_METRICS_CSV}")
 
     confusion_df = _confusion_long(metrics_by_split, ytrue_pred_by_split)
-    confusion_df.to_csv(OUTPUT_CONFUSION_CSV, index=False)
+    confusion_df.to_csv(OUTPUT_CONFUSION_CSV, index=False, encoding="utf-8-sig")
     print(f"saved confusion -> {OUTPUT_CONFUSION_CSV}")
 
     hgb_test = _load_hgb_test_metrics()

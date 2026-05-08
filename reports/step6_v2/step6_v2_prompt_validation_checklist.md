@@ -30,12 +30,14 @@
 
 ## 3. Forbidden expression exact match
 
-- **목적**: `step5_v2_forbidden_expressions.md` §1 #1 ~ #18의 정확한 문자열이 caption에 등장하는지.
-- **검사 방식**: 18개 문자열 각각에 대해 `caption_ko + " " + confidence_phrase + " " + uncertainty_phrase + " " + limitation_phrase`를 합친 텍스트에서 substring 검사.
+- **목적**: `step5_v2_forbidden_expressions.md` §1 #1 ~ #18의 정확한 문자열 + 추가 *관찰* 단정 어휘가 caption에 등장하는지.
+- **검사 방식**: forbidden 문자열 각각에 대해 `caption_ko + " " + confidence_phrase + " " + uncertainty_phrase + " " + limitation_phrase`를 합친 텍스트에서 substring 검사.
+- **추가 어휘 (2026-05-08)**: "관찰됩니다", "관찰된다", "관찰되었다", "관찰됨" — wrist IMU는 직접 *관찰*하지 않으므로 caption에 부적절. 대체: "나타납니다", "보입니다", "해석 가능한 신호입니다".
 - **invalid 예시**:
-  - "knee valgus가 관찰됩니다."
+  - "knee valgus가 관찰됩니다." (knee valgus + 관찰됩니다 둘 다 위반)
   - "후방 경사가 일어났습니다."
   - "양측 무릎이 안쪽으로 모입니다."
+  - "정상 패턴이 비교적 일관되게 관찰됩니다." ("관찰됩니다" 위반)
 - **metric**: `forbidden_expression_rate` (이 비율이 0이 되는 것이 목표)
 
 ---
@@ -113,6 +115,7 @@
 ## 10. Posture phrase consistency
 
 - **목적**: `posture_canonical`에 해당하는 한국어 표현이 caption 본문에 정확히 등장하는지.
+- **정책 강화 (2026-05-08)**: `step6_v2_final_system_prompt.md` §5에 따라 **no_call=true인 경우에도 posture phrase 누락은 fail**이다. fallback caption 역시 schema의 posture를 받아 첫 문장에 자세 표현을 포함한다(`step6_v2_output_schema.md` §4.2).
 - **검사 방식**:
   - SA → "팔을 앞으로 둔 자세" 부분 문자열 등장.
   - CA → "팔을 교차한 자세" 부분 문자열 등장.
@@ -120,6 +123,7 @@
   - 다른 자세 표현이 들어오면 fail (예: HW인데 "팔을 앞으로 둔 자세"가 들어가면 fail).
 - **invalid 예시**:
   - schema `posture_canonical=HW` + caption "팔을 앞으로 둔 자세에서..." → mismatch.
+  - schema `no_call=true`, `posture_canonical=SA` + caption "현재 손목 센서 신호만으로는 안정적인 설명을 제공하기 어렵습니다." (자세 표현 없음) → posture_phrase_missing.
 - **metric**: `posture_phrase_mismatch_rate`
 
 ---

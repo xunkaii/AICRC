@@ -271,7 +271,7 @@ def main() -> int:
             f"Run scripts/build_step4_modeling_dataset.py first."
         )
 
-    df = pd.read_csv(INPUT_FILE)
+    df = pd.read_csv(INPUT_FILE, encoding="utf-8-sig")
     print(f"loaded {len(df)} rows from {INPUT_FILE}")
     input_split_counts = df[SPLIT_COL].value_counts().sort_index().to_dict()
     print(f"split counts: {input_split_counts}")
@@ -292,7 +292,7 @@ def main() -> int:
 
         pred_path = OUTPUT_PREDICTIONS[condition_name]
         model_path = OUTPUT_MODELS[condition_name]
-        out.to_csv(pred_path, index=False)
+        out.to_csv(pred_path, index=False, encoding="utf-8-sig")
         joblib.dump(model, model_path)
         print(f"[{condition_name}] saved predictions -> {pred_path}")
         print(f"[{condition_name}] saved model       -> {model_path}")

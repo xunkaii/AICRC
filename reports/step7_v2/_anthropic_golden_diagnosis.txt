@@ -1,0 +1,100 @@
+=== EP01_C1_CA_rep01 ===
+  status=fallback, n_retries=3, errors=fallback_used|biomech_claim:골반
+  schema: posture=CA, ag=within_group_c1_c5_c6, level=low, class_set=["C1", "C5", "C6"]
+  FINAL caption_ko: 현재 손목 센서 신호만으로는 안정적인 설명을 제공하기 어렵습니다.
+  FINAL confidence_phrase: 안정적인 설명을 제공하기 어렵습니다
+  FINAL uncertainty_phrase: 
+  FINAL limitation_phrase: 
+  attempts:
+    [attempt 1] pass=False, errors=biomech_claim:골반
+      raw: ```json
+{
+  "caption_ko": "팔을 교차한 자세에서 측정된 손목 센서 신호는 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호로 보입니다. 동작 기준점이 불안정하여 설명 신뢰도가 낮습니다. 손목 센서는 무릎 각도나 골반 움직임을 직접 측정하지 않으므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오.",
+    [attempt 2] pass=False, errors=biomech_claim:골반
+      raw: ```json
+{
+  "caption_ko": "팔을 교차한 자세에서 측정된 손목 센서 신호는 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호로 보입니다. 동작 기준점이 불안정하여 설명 신뢰도가 낮습니다. 손목 센서는 무릎 각도나 골반 움직임을 직접 측정하지 않으므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오.",
+    [attempt 3] pass=False, errors=biomech_claim:골반
+      raw: ```json
+{
+  "caption_ko": "팔을 교차한 자세에서 측정된 손목 센서 신호는 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호로 보입니다. 동작 기준점이 불안정하여 설명 신뢰도가 낮습니다. 손목 센서는 무릎 각도나 골반 움직임을 직접 측정하지 않으므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오.",
+    [attempt 1] pass=False, errors=biomech_claim:골반
+      raw: ```json
+{
+  "caption_ko": "팔을 교차한 자세에서 측정된 손목 센서 신호는 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호로 보입니다. 동작 기준점이 불안정하여 설명 신뢰도가 낮습니다. 손목 센서는 무릎 각도나 골반 움직임을 직접 측정하지 않으므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오.",
+    [attempt 2] pass=False, errors=biomech_claim:골반
+      raw: ```json
+{
+  "caption_ko": "팔을 교차한 자세에서 측정된 손목 센서 신호는 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호로 보입니다. 동작 기준점이 불안정하여 설명 신뢰도가 낮습니다. 손목 센서는 무릎 각도나 골반 움직임을 직접 측정하지 않으므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오.",
+    [attempt 3] pass=False, errors=biomech_claim:골반
+      raw: ```json
+{
+  "caption_ko": "팔을 교차한 자세에서 측정된 손목 센서 신호는 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호로 보입니다. 동작 기준점이 불안정하여 설명 신뢰도가 낮습니다. 손목 센서는 무릎 각도나 골반 움직임을 직접 측정하지 않으므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오.",
+
+=== EP01_C1_HW_rep01 ===
+  status=retry_then_ok, n_retries=1, errors=
+  schema: posture=HW, ag=pair_c3_c4, level=hedged, class_set=["C3", "C4"]
+  FINAL caption_ko: 손을 허리에 둔 자세에서 깊이 부족과 복합 오류 후보가 함께 나타나는 신호와 무릎 관련 오류 후보가 섞인 신호가 함께 관찰됩니다. 복합 오류 후보 두 가지가 함께 나타나는 경계 신호로 보이며, 단일 유형으로 좁히기 어렵습니다. 손목 센서 기준의 추정이므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오.
+  FINAL confidence_phrase: 단일 유형으로 좁히기 어렵습니다
+  FINAL uncertainty_phrase: 복합 오류 후보 두 가지가 함께 나타나는 경계 신호
+  FINAL limitation_phrase: 손목 센서 기준의 추정
+  attempts:
+    [attempt 1] pass=False, errors=raw_class_label_in_caption
+      raw: ```json
+{
+  "caption_ko": "손을 허리에 둔 자세에서 측정된 손목 센서 신호는 깊이 부족과 복합 오류 후보가 함께 나타나는 신호(C3)와 무릎 관련 오류 후보가 섞인 신호(C4) 두 가지 가능성이 함께 나타납니다. 복합 오류 후보 두 가지가 함께 나타나는 경계 신호로, 단일 유형으로 좁히기 어렵습니다.",
+  "confidence_phr
+    [attempt 2] pass=True, errors=
+      raw: ```json
+{
+  "caption_ko": "손을 허리에 둔 자세에서 깊이 부족과 복합 오류 후보가 함께 나타나는 신호와 무릎 관련 오류 후보가 섞인 신호가 함께 관찰됩니다. 복합 오류 후보 두 가지가 함께 나타나는 경계 신호로 보이며, 단일 유형으로 좁히기 어렵습니다. 손목 센서 기준의 추정이므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해
+    [attempt 1] pass=False, errors=raw_class_label_in_caption
+      raw: ```json
+{
+  "caption_ko": "손을 허리에 둔 자세에서 측정된 손목 센서 신호는 깊이 부족과 복합 오류 후보가 함께 나타나는 신호(C3)와 무릎 관련 오류 후보가 섞인 신호(C4) 두 가지 후보 패턴을 보입니다. 복합 오류 후보 두 가지가 함께 나타나는 경계 신호로, 단일 유형으로 좁히기 어렵습니다. 손목 센서 기준의 추정이며, 정확한 자
+    [attempt 2] pass=True, errors=
+      raw: ```json
+{
+  "caption_ko": "손을 허리에 둔 자세에서 깊이 부족과 복합 오류 후보가 함께 나타나는 신호와 무릎 관련 오류 후보가 섞인 신호가 함께 관찰됩니다. 복합 오류 후보 두 가지가 함께 나타나는 경계 신호로, 단일 유형으로 좁히기 어렵습니다. 손목 센서 기준의 추정이며, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십
+
+=== EP01_C3_HW_rep03 ===
+  status=retry_then_ok, n_retries=1, errors=
+  schema: posture=HW, ag=pair_c3_c4, level=hedged, class_set=["C3", "C4"]
+  FINAL caption_ko: 손을 허리에 둔 자세에서 깊이 부족과 복합 오류 후보가 함께 나타나는 신호와 무릎 관련 오류 후보가 섞인 신호가 함께 관찰됩니다. 복합 오류 후보 두 가지가 함께 나타나는 경계 신호로 보이며, 단일 유형으로 좁히기 어렵습니다. 손목 센서 기준의 추정이므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오.
+  FINAL confidence_phrase: 단일 유형으로 좁히기 어렵습니다
+  FINAL uncertainty_phrase: 복합 오류 후보 두 가지가 함께 나타나는 경계 신호
+  FINAL limitation_phrase: 손목 센서 기준의 추정
+  attempts:
+    [attempt 1] pass=False, errors=biomech_claim:골반
+      raw: ```json
+{
+  "caption_ko": "손을 허리에 둔 자세에서 깊이 부족과 복합 오류 후보가 함께 나타나는 신호와 무릎 관련 오류 후보가 섞인 신호가 함께 나타납니다. 복합 오류 후보 두 가지가 함께 나타나는 경계 신호로 보이며, 단일 유형으로 좁히기 어렵습니다. 손목 센서는 무릎 각도나 골반 움직임을 직접 측정하지 않으므로, 정확한 자세 평가는
+    [attempt 2] pass=True, errors=
+      raw: ```json
+{
+  "caption_ko": "손을 허리에 둔 자세에서 깊이 부족과 복합 오류 후보가 함께 나타나는 신호와 무릎 관련 오류 후보가 섞인 신호가 함께 관찰됩니다. 복합 오류 후보 두 가지가 함께 나타나는 경계 신호로 보이며, 단일 유형으로 좁히기 어렵습니다. 손목 센서 기준의 추정이므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해
+
+=== EP01_C1_CA_rep04 ===
+  status=retry_then_ok, n_retries=2, errors=
+  schema: posture=CA, ag=within_group_c1_c5_c6, level=hedged, class_set=["C1", "C5", "C6"]
+  FINAL caption_ko: 팔을 교차한 자세에서 손목 센서 기준으로 정상 패턴에 가까운 신호와 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호입니다. 단일 유형으로 좁히기 어렵습니다.
+  FINAL confidence_phrase: 경계 신호로 보입니다
+  FINAL uncertainty_phrase: 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호
+  FINAL limitation_phrase: 손목 센서 기준의 추정
+  attempts:
+    [attempt 1] pass=False, errors=biomech_claim:골반
+      raw: ```json
+{
+  "caption_ko": "팔을 교차한 자세에서 손목 센서 기준으로 정상 패턴에 가까운 신호와 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호입니다. 단일 유형으로 좁히기 어렵습니다. 손목 센서는 무릎 각도나 골반 움직임을 직접 측정하지 않으므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오.",
+  "con
+    [attempt 2] pass=False, errors=biomech_claim:골반
+      raw: ```json
+{
+  "caption_ko": "팔을 교차한 자세에서 손목 센서 기준으로 정상 패턴에 가까운 신호와 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호입니다. 단일 유형으로 좁히기 어렵습니다. 손목 센서는 무릎 각도나 골반 움직임을 직접 측정하지 않으므로, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오.",
+  "con
+    [attempt 3] pass=True, errors=
+      raw: ```json
+{
+  "caption_ko": "팔을 교차한 자세에서 손목 센서 기준으로 정상 패턴에 가까운 신호와 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호입니다. 단일 유형으로 좁히기 어렵습니다.",
+  "confidence_phrase": "경계 신호로 보입니다",
+  "uncertainty_phrase": "정상 패턴과 무릎 관련 오류 후

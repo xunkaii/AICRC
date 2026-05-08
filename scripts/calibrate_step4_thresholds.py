@@ -723,8 +723,8 @@ def main() -> int:
                 f"Run scripts/train_step4_baseline.py first."
             )
 
-    df_raw = pd.read_csv(INPUT_PREDICTIONS["raw"])
-    df_zs = pd.read_csv(INPUT_PREDICTIONS["zscore"])
+    df_raw = pd.read_csv(INPUT_PREDICTIONS["raw"], encoding="utf-8-sig")
+    df_zs = pd.read_csv(INPUT_PREDICTIONS["zscore"], encoding="utf-8-sig")
     print(f"loaded predictions raw    : {len(df_raw)} rows")
     print(f"loaded predictions zscore : {len(df_zs)} rows")
 

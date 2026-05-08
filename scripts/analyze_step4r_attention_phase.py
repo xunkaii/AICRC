@@ -158,12 +158,12 @@ def _build_anchor_table(sample_ids: np.ndarray) -> pd.DataFrame:
         raise FileNotFoundError(f"Bottom event audit not found: {INPUT_BOTTOM_AUDIT}")
     audit = pd.read_csv(
         INPUT_BOTTOM_AUDIT,
-        usecols=["sample_id", "n_rows", "acc_bottom_idx", "ensemble_bottom_idx"],
+        usecols=["sample_id", "n_rows", "acc_bottom_idx", "ensemble_bottom_idx"], encoding="utf-8-sig"
     )
     audit = audit.rename(columns={"n_rows": "n_rows_audit"})
     if not INPUT_MANIFEST.exists():
         raise FileNotFoundError(f"Manifest not found: {INPUT_MANIFEST}")
-    manifest = pd.read_csv(INPUT_MANIFEST, usecols=["sample_id", "n_rows"])
+    manifest = pd.read_csv(INPUT_MANIFEST, usecols=["sample_id", "n_rows"], encoding="utf-8-sig")
     manifest = manifest.rename(columns={"n_rows": "n_rows_manifest"})
     df = pd.merge(audit, manifest, on="sample_id", how="outer")
     df = df.set_index("sample_id")
@@ -542,7 +542,7 @@ def main() -> int:
         usecols=[
             "sample_id", "no_call", "ambiguity_group", "top1_class",
             "predictive_entropy_calibrated",
-        ],
+        ], encoding="utf-8-sig"
     ).set_index("sample_id")
     sc = sc.reindex(sample_id)
 
@@ -569,7 +569,7 @@ def main() -> int:
         "no_call": sc["no_call"].astype(bool).to_numpy(),
         "ambiguity_group": sc["ambiguity_group"].to_numpy(),
     })
-    df.to_csv(OUTPUT_SUMMARY_CSV, index=False)
+    df.to_csv(OUTPUT_SUMMARY_CSV, index=False, encoding="utf-8-sig")
     print(f"saved per-sample summary -> {OUTPUT_SUMMARY_CSV}")
 
     # Save attention_weights npz.
@@ -585,15 +585,15 @@ def main() -> int:
 
     # Aggregations.
     by_class = _aggregate(df, "class_id")
-    by_class.to_csv(OUTPUT_BY_CLASS_CSV, index=False)
+    by_class.to_csv(OUTPUT_BY_CLASS_CSV, index=False, encoding="utf-8-sig")
     print(f"saved by_class -> {OUTPUT_BY_CLASS_CSV}")
 
     by_posture = _aggregate(df, "posture_canonical")
-    by_posture.to_csv(OUTPUT_BY_POSTURE_CSV, index=False)
+    by_posture.to_csv(OUTPUT_BY_POSTURE_CSV, index=False, encoding="utf-8-sig")
     print(f"saved by_posture -> {OUTPUT_BY_POSTURE_CSV}")
 
     by_correct = _aggregate(df, "correct")
-    by_correct.to_csv(OUTPUT_BY_CORRECTNESS_CSV, index=False)
+    by_correct.to_csv(OUTPUT_BY_CORRECTNESS_CSV, index=False, encoding="utf-8-sig")
     print(f"saved by_correctness -> {OUTPUT_BY_CORRECTNESS_CSV}")
 
     by_no_call = _aggregate(df, "no_call")

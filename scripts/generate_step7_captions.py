@@ -347,7 +347,7 @@ def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     print(f"Loading modeling dataset: {INPUT_MODELING}")
-    modeling = pd.read_csv(INPUT_MODELING)
+    modeling = pd.read_csv(INPUT_MODELING, encoding="utf-8-sig")
     print(f"  modeling rows: {len(modeling)}")
     if len(modeling) != EXPECTED_ROW_COUNT:
         sys.exit(f"FAIL: modeling rows {len(modeling)} != {EXPECTED_ROW_COUNT}")
@@ -379,7 +379,7 @@ def main():
         print(f"\n=== Branch: {branch} ===")
         schema_path = INPUT_SCHEMA[branch]
         print(f"Loading schema output: {schema_path}")
-        schema = pd.read_csv(schema_path)
+        schema = pd.read_csv(schema_path, encoding="utf-8-sig")
         print(f"  schema rows: {len(schema)}")
         if len(schema) != EXPECTED_ROW_COUNT:
             sys.exit(f"FAIL: schema rows {len(schema)} != {EXPECTED_ROW_COUNT}")
@@ -567,7 +567,7 @@ def main():
     sample_groups = ["T-CONF-1", "T-CONF-2", "T-HEDGE-1", "T-HEDGE-2", "T-HEDGE-3",
                      "T-LOW-1", "T-LOW-2", "T-NC-POSTURE", "T-NC-ANCHOR", "T-NC-LOWCONF"]
     print("\n--- caption samples per template (raw branch, up to 5 each) ---")
-    raw_df = pd.read_csv(OUTPUT_FILES["raw"])
+    raw_df = pd.read_csv(OUTPUT_FILES["raw"], encoding="utf-8-sig")
     for tpl in sample_groups:
         sub = raw_df[raw_df["template_id"] == tpl]
         if len(sub) == 0:

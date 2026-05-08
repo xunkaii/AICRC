@@ -31,9 +31,20 @@ Thumbs.db
 desktop.ini
 
 # --- Secrets / env --------------------------------------------------------
+# .env contains API keys (ANTHROPIC_API_KEY, OPENAI_API_KEY, ...) and MUST
+# never be committed. .env.example is committed to document required vars.
 .env
 .env.*
+.env.local
+.env.*.local
+*.env
 !.env.example
+# Other secret formats
+secrets/
+*.pem
+*.key
+*_secret*
+*_credentials*
 
 # --- Project-specific outputs --------------------------------------------
 # Raw / intermediate data should not be committed; the dataset itself lives

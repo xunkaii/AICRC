@@ -21,7 +21,7 @@ OUT_JSON = ROOT / "reports" / "step6_v2" / "_golden_case_samples_extracted.json"
 
 
 def main() -> int:
-    df = pd.read_csv(SCHEMA_CSV)
+    df = pd.read_csv(SCHEMA_CSV, encoding="utf-8-sig")
     df["class_set_list"] = df["class_set"].apply(json.loads)
     df["class_set_size"] = df["class_set_list"].apply(len)
     df["uncertainty_flags_list"] = df["uncertainty_flags"].apply(json.loads)

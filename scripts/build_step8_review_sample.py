@@ -538,8 +538,8 @@ def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     print("Loading Step 7 caption CSVs (read-only)")
-    raw = pd.read_csv(INPUT_FILES["raw"])
-    zs = pd.read_csv(INPUT_FILES["zscore"])
+    raw = pd.read_csv(INPUT_FILES["raw"], encoding="utf-8-sig")
+    zs = pd.read_csv(INPUT_FILES["zscore"], encoding="utf-8-sig")
     print(f"  raw rows: {len(raw)}  zscore rows: {len(zs)}")
 
     print("\nValidating inputs")

@@ -481,7 +481,7 @@ def main() -> int:
         **{f"p_{c}_calibrated": probs_cal[:, i] for i, c in enumerate(CLASSES)},
         "temperature": [T] * len(data["y"]),
     })
-    pred_df.to_csv(OUTPUT_PREDS_CSV, index=False)
+    pred_df.to_csv(OUTPUT_PREDS_CSV, index=False, encoding="utf-8-sig")
     print(f"saved calibrated predictions -> {OUTPUT_PREDS_CSV}")
 
     # Save metrics CSV (long format).
@@ -496,7 +496,7 @@ def main() -> int:
     rows.append({"split": "—", "stage": "—", "metric": "fitted_temperature", "value": float(T)})
     rows.append({"split": "—", "stage": "—", "metric": "lbfgs_n_closures", "value": float(len(fit_history["iters"]))})
     rows.append({"split": "—", "stage": "—", "metric": "final_val_nll", "value": float(fit_history["nll"][-1])})
-    pd.DataFrame(rows).to_csv(OUTPUT_METRICS_CSV, index=False)
+    pd.DataFrame(rows).to_csv(OUTPUT_METRICS_CSV, index=False, encoding="utf-8-sig")
     print(f"saved metrics -> {OUTPUT_METRICS_CSV}")
 
     # Markdown report.

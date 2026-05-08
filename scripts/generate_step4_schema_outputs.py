@@ -431,7 +431,7 @@ def main() -> int:
         print(f"output : {out_path}")
         print("-" * 64)
 
-        df = pd.read_csv(in_path)
+        df = pd.read_csv(in_path, encoding="utf-8-sig")
         if len(df) != EXPECTED_ROW_COUNT:
             raise ValueError(
                 f"[{cond}] input row count {len(df)} != {EXPECTED_ROW_COUNT}."
@@ -451,7 +451,7 @@ def main() -> int:
         )[OUTPUT_COL_ORDER]
 
         _validate_output(out, cond)
-        out.to_csv(out_path, index=False)
+        out.to_csv(out_path, index=False, encoding="utf-8-sig")
         print(f"[{cond}] saved: {out_path}")
         _summary(out, cond)
 
