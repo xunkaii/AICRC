@@ -14,7 +14,14 @@
       "Read(C:\\Users\\\\user\\\\Docker\\\\AICRC_v2\\**)",
       "Read(//tmp/**)",
       "WebFetch(domain:arxiv.org)",
-      "Bash(claude mcp *)"
+      "Bash(claude mcp *)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' -X utf8 scripts/build_step4r_sequence_dataset.py)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' -X utf8 -c \"import torch; print\\('torch', torch.__version__\\); print\\('cuda available', torch.cuda.is_available\\(\\)\\); print\\('device count', torch.cuda.device_count\\(\\) if torch.cuda.is_available\\(\\) else 0\\); print\\('device name', torch.cuda.get_device_name\\(0\\) if torch.cuda.is_available\\(\\) else 'cpu only'\\)\")",
+      "PowerShell(Test-Path *)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -X utf8 scripts/train_step4r_attention_rnn.py)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -X utf8 scripts/calibrate_step4r_attention_temperature.py)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -X utf8 scripts/generate_step4r_attention_schema_outputs.py)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -X utf8 scripts/analyze_step4r_attention_phase.py)"
     ]
   },
   "mcpServers": {

@@ -1,0 +1,3 @@
+correct,n,attention_entropy_mean,attention_entropy_p25,attention_entropy_p50,attention_entropy_p75,descending_mass_mean,bottom_transition_mass_mean,ascending_recovery_mass_mean,peak_phase_descending_count,peak_phase_bottom_transition_count,peak_phase_ascending_recovery_count,most_common_peak_phase,anchor_distance_n,anchor_distance_mean,anchor_distance_p50
+False,3213,3.147810697555542,2.798586368560791,3.127373456954956,3.479102611541748,0.5312506161152589,0.2922844015759815,0.17646498328034646,1847,974,392,descending,3213,38.59165888577653,37.0
+True,6062,3.132347583770752,2.7134569883346558,3.1033482551574707,3.514326572418213,0.4997488617849101,0.3101206749464283,0.19013046371415965,3186,1967,909,descending,6062,36.06614978554932,33.0
