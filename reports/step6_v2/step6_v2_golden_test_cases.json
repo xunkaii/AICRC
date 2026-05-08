@@ -1,0 +1,582 @@
+[
+  {
+    "case_id": "case_01_confident_C2_SA",
+    "purpose": "confident_C2 + SA. anchor_unreliable로 confident → hedged 강등된 보강 케이스.",
+    "input_schema": {
+      "sample_id": "EP01_C1_SA_rep06",
+      "posture_canonical": "SA",
+      "class_set": ["C2"],
+      "ambiguity_group": "confident_C2",
+      "uncertainty_flags": ["confident_C2", "anchor_unreliable"],
+      "caption_confidence_level": "hedged",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "output_is_json",
+      "all_required_fields_present",
+      "uses_posture_phrase_SA",
+      "preserves_class_set",
+      "uses_hedged_tone",
+      "mentions_anchor_unreliable_when_flagged",
+      "includes_limitation_when_needed",
+      "avoids_forbidden_biomechanics",
+      "no_attention_terms"
+    ],
+    "forbidden_properties": [
+      "direct_knee_valgus_claim",
+      "posterior_tilting_claim",
+      "left_right_direction_claim",
+      "attention_term_leakage",
+      "raw_class_label_in_caption",
+      "uses_confident_tone_after_anchor_downgrade"
+    ],
+    "example_valid_output": {
+      "caption_ko": "팔을 앞으로 둔 자세에서 측정된 손목 IMU 신호는 깊이 부족 계열로 해석 가능한 패턴에 가까운 경향이 있으나, 동작 기준점이 불안정하여 설명 신뢰도가 낮습니다. 손목 센서 기준의 추정입니다.",
+      "confidence_phrase": "패턴에 가까운 경향이 있습니다",
+      "uncertainty_phrase": "깊이 부족 계열에 가까운 패턴 (동작 기준점이 불안정하여 설명 신뢰도가 낮습니다)",
+      "limitation_phrase": "손목 센서 기준의 추정",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "팔을 앞으로 둔 자세에서 측정된 손목 IMU 신호는 깊이 부족이 명확히 진단됩니다.",
+      "violation_notes": "(1) anchor_unreliable로 hedged 강등됐는데 confident 어조('명확히', '진단') 사용. (2) absolute depth 단정. (3) anchor_unreliable 언급 누락."
+    }
+  },
+  {
+    "case_id": "case_02_confident_C2_CA",
+    "purpose": "confident_C2 + CA. anchor 신뢰도가 충분한 진정한 confident 케이스.",
+    "input_schema": {
+      "sample_id": "EP01_C2_CA_rep01",
+      "posture_canonical": "CA",
+      "class_set": ["C2"],
+      "ambiguity_group": "confident_C2",
+      "uncertainty_flags": ["confident_C2"],
+      "caption_confidence_level": "confident",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "output_is_json",
+      "all_required_fields_present",
+      "uses_posture_phrase_CA",
+      "preserves_class_set",
+      "uses_confident_tone",
+      "includes_limitation_when_needed",
+      "avoids_forbidden_biomechanics",
+      "no_attention_terms"
+    ],
+    "forbidden_properties": [
+      "uses_word_jindan_or_certain",
+      "absolute_depth_claim",
+      "left_right_direction_claim",
+      "raw_class_label_in_caption",
+      "attention_term_leakage"
+    ],
+    "example_valid_output": {
+      "caption_ko": "팔을 교차한 자세에서 기록된 손목 IMU 신호는 깊이 부족 계열로 해석 가능한 패턴이 비교적 일관되게 나타납니다. 손목 센서 기준의 추정이며, 정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오.",
+      "confidence_phrase": "비교적 일관되게 나타납니다",
+      "uncertainty_phrase": "",
+      "limitation_phrase": "정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "팔을 교차한 자세에서 정확한 깊이 부족이 확실히 관찰되며, 부상 위험이 높습니다.",
+      "violation_notes": "'정확한 깊이' 단정, '확실히' 단정, '부상 위험' 의료 단정 — system prompt §7 위반."
+    }
+  },
+  {
+    "case_id": "case_03_within_group_c1_c5_c6_hedged",
+    "purpose": "within_group_c1_c5_c6 + hedged. C1/C5/C6 그룹 모호도를 그대로 표현해야 함.",
+    "input_schema": {
+      "sample_id": "EP01_C1_CA_rep02",
+      "posture_canonical": "CA",
+      "class_set": ["C1", "C5", "C6"],
+      "ambiguity_group": "within_group_c1_c5_c6",
+      "uncertainty_flags": ["within_group_ambiguity_c1_c5_c6"],
+      "caption_confidence_level": "hedged",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "output_is_json",
+      "all_required_fields_present",
+      "uses_posture_phrase_CA",
+      "preserves_class_set",
+      "uses_hedged_tone",
+      "ambiguity_phrase_present",
+      "no_left_right_direction",
+      "avoids_forbidden_biomechanics",
+      "no_attention_terms"
+    ],
+    "forbidden_properties": [
+      "direct_knee_valgus_claim",
+      "left_right_direction_claim",
+      "class_set_narrowing",
+      "single_class_assertion_when_set_size_ge_2",
+      "raw_class_label_in_caption"
+    ],
+    "example_valid_output": {
+      "caption_ko": "팔을 교차한 자세에서 측정된 손목 IMU 패턴은, 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호로 보입니다. 단일 유형으로 좁히기 어렵습니다. 손목 센서 기준의 추정입니다.",
+      "confidence_phrase": "단일 유형으로 좁히기 어렵습니다",
+      "uncertainty_phrase": "정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호",
+      "limitation_phrase": "손목 센서 기준의 추정",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "팔을 교차한 자세에서 양측 무릎이 안쪽으로 들어가는 패턴이 관찰됩니다.",
+      "violation_notes": "(1) '양측' 좌우 방향 단정. (2) '무릎이 안쪽으로 들어가는' knee valgus 우회 표현. (3) class_set 3개 중 정상(C1)을 누락하고 valgus 단정으로 좁힘."
+    }
+  },
+  {
+    "case_id": "case_04_within_group_c1_c5_c6_low",
+    "purpose": "within_group_c1_c5_c6 + low + anchor_unreliable. 동작 기준점 불안정 명시 필요.",
+    "input_schema": {
+      "sample_id": "EP01_C1_CA_rep01",
+      "posture_canonical": "CA",
+      "class_set": ["C1", "C5", "C6"],
+      "ambiguity_group": "within_group_c1_c5_c6",
+      "uncertainty_flags": ["within_group_ambiguity_c1_c5_c6", "anchor_unreliable"],
+      "caption_confidence_level": "low",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "output_is_json",
+      "all_required_fields_present",
+      "uses_posture_phrase_CA",
+      "preserves_class_set",
+      "uses_low_tone",
+      "mentions_anchor_unreliable_when_flagged",
+      "no_left_right_direction",
+      "avoids_forbidden_biomechanics"
+    ],
+    "forbidden_properties": [
+      "uses_confident_tone",
+      "single_class_assertion_when_set_size_ge_2",
+      "direct_knee_valgus_claim",
+      "left_right_direction_claim",
+      "raw_class_label_in_caption"
+    ],
+    "example_valid_output": {
+      "caption_ko": "팔을 교차한 자세에서, 동작 기준점이 불안정하여 설명 신뢰도가 낮은 상태입니다. 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타날 가능성이 있으나, 후보군 수준으로만 해석하는 것이 적절합니다.",
+      "confidence_phrase": "후보군 수준으로만 해석하는 것이 적절합니다",
+      "uncertainty_phrase": "정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타남 (동작 기준점이 불안정하여 설명 신뢰도가 낮습니다)",
+      "limitation_phrase": "손목 센서 기준의 추정",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "팔을 교차한 자세에서 무릎 관련 오류 후보가 비교적 일관되게 관찰됩니다.",
+      "violation_notes": "(1) low인데 confident 어조('비교적 일관되게'). (2) anchor_unreliable 언급 누락. (3) 정상 패턴(C1) 후보 누락 — class_set narrowing."
+    }
+  },
+  {
+    "case_id": "case_05_pair_c3_c4_hedged",
+    "purpose": "pair_c3_c4 + hedged. 복합 오류 후보 두 가지의 경계 신호로 표현.",
+    "input_schema": {
+      "sample_id": "EP01_C1_HW_rep01",
+      "posture_canonical": "HW",
+      "class_set": ["C3", "C4"],
+      "ambiguity_group": "pair_c3_c4",
+      "uncertainty_flags": ["pair_ambiguity_c3_c4"],
+      "caption_confidence_level": "hedged",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "output_is_json",
+      "uses_posture_phrase_HW",
+      "preserves_class_set",
+      "uses_hedged_tone",
+      "uses_phrase_복합_오류_후보",
+      "avoids_forbidden_biomechanics",
+      "no_left_right_direction"
+    ],
+    "forbidden_properties": [
+      "posterior_tilting_claim",
+      "direct_knee_valgus_claim",
+      "left_right_direction_claim",
+      "class_set_narrowing",
+      "raw_class_label_in_caption"
+    ],
+    "example_valid_output": {
+      "caption_ko": "손을 허리에 둔 자세에서 측정된 손목 IMU 패턴은 복합 오류 후보 두 가지가 함께 나타나는 경계 신호로 보입니다. 단일 유형으로 좁히기 어렵습니다. 손목 센서 기준의 추정입니다.",
+      "confidence_phrase": "단일 유형으로 좁히기 어렵습니다",
+      "uncertainty_phrase": "복합 오류 후보 두 가지가 함께 나타나는 경계 신호",
+      "limitation_phrase": "손목 센서 기준의 추정",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "손을 허리에 둔 자세에서 골반 후방 경사와 knee valgus가 함께 관찰되는 복합 오류 패턴입니다.",
+      "violation_notes": "C3 원 정의의 posterior tilting과 knee valgus를 *직접* 표현 — `step5_v2_forbidden_expressions.md` §1 #2, #13~#14 위반."
+    }
+  },
+  {
+    "case_id": "case_06_pair_plus_c2_absorption_low",
+    "purpose": "pair_plus_c2_absorption + low. C2 흡수 가능성을 함께 표현해야 함.",
+    "input_schema": {
+      "sample_id": "EP02_C3_SA_rep04",
+      "posture_canonical": "SA",
+      "class_set": ["C3", "C4", "C2"],
+      "ambiguity_group": "pair_plus_c2_absorption",
+      "uncertainty_flags": ["pair_plus_c2_absorption", "anchor_unreliable"],
+      "caption_confidence_level": "low",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "output_is_json",
+      "uses_posture_phrase_SA",
+      "preserves_class_set",
+      "uses_low_tone",
+      "mentions_c2_absorption_when_flagged",
+      "mentions_anchor_unreliable_when_flagged",
+      "avoids_forbidden_biomechanics"
+    ],
+    "forbidden_properties": [
+      "posterior_tilting_claim",
+      "direct_knee_valgus_claim",
+      "single_class_assertion_when_set_size_ge_2",
+      "uses_confident_tone",
+      "raw_class_label_in_caption"
+    ],
+    "example_valid_output": {
+      "caption_ko": "팔을 앞으로 둔 자세에서, 동작 기준점이 불안정하여 설명 신뢰도가 낮은 상태입니다. 깊이 부족 계열 신호와 복합 오류 후보가 함께 나타날 가능성이 있으나, 후보군 수준으로만 해석하는 것이 적절합니다.",
+      "confidence_phrase": "후보군 수준으로만 해석하는 것이 적절합니다",
+      "uncertainty_phrase": "깊이 부족 계열 신호와 복합 오류 후보가 함께 나타남 (동작 기준점이 불안정하여 설명 신뢰도가 낮습니다)",
+      "limitation_phrase": "손목 센서 기준의 추정",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "팔을 앞으로 둔 자세에서 복합 오류 후보가 함께 나타납니다.",
+      "violation_notes": "C2 흡수 가능성(class_set의 'C2')을 누락 — `pair_plus_c2_absorption` flag가 강제하는 hedge 표현 missing. anchor_unreliable 언급도 누락."
+    }
+  },
+  {
+    "case_id": "case_07_pair_plus_c2_absorption_anchor_unreliable_explicit",
+    "purpose": "case 6과 동일 sample. 본 case의 purpose는 anchor_unreliable이 *명시적으로* 언어화되는지 검사.",
+    "input_schema": {
+      "sample_id": "EP02_C3_SA_rep04",
+      "posture_canonical": "SA",
+      "class_set": ["C3", "C4", "C2"],
+      "ambiguity_group": "pair_plus_c2_absorption",
+      "uncertainty_flags": ["pair_plus_c2_absorption", "anchor_unreliable"],
+      "caption_confidence_level": "low",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "mentions_anchor_unreliable_when_flagged",
+      "mentions_c2_absorption_when_flagged",
+      "uses_low_tone",
+      "preserves_class_set"
+    ],
+    "forbidden_properties": [
+      "anchor_unreliable_silently_dropped",
+      "uses_confident_tone",
+      "posterior_tilting_claim"
+    ],
+    "example_valid_output": {
+      "caption_ko": "팔을 앞으로 둔 자세에서, 동작 기준점이 불안정하여 설명 신뢰도가 낮은 상태입니다. 깊이 부족 계열 신호와 복합 오류 후보가 함께 나타날 가능성이 있으나, 후보군 수준으로만 해석하는 것이 적절합니다.",
+      "confidence_phrase": "후보군 수준으로만 해석하는 것이 적절합니다",
+      "uncertainty_phrase": "깊이 부족 계열 신호와 복합 오류 후보가 함께 나타남 (동작 기준점이 불안정하여 설명 신뢰도가 낮습니다)",
+      "limitation_phrase": "손목 센서 기준의 추정",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "팔을 앞으로 둔 자세에서 깊이 부족 계열 신호와 복합 오류 후보가 함께 나타날 가능성이 있습니다.",
+      "violation_notes": "anchor_unreliable flag가 caption에서 *조용히 사라짐* — '동작 기준점이 불안정' 어구 누락. low 어조도 약화됨."
+    }
+  },
+  {
+    "case_id": "case_08_no_call_anchor_unreliable",
+    "purpose": "no_call=true + anchor_unreliable_anchor_dependent_set. 어떤 클래스 단정도 금지.",
+    "input_schema": {
+      "sample_id": "EP01_C2_SA_rep01",
+      "posture_canonical": "SA",
+      "class_set": [],
+      "ambiguity_group": "no_call",
+      "uncertainty_flags": ["pair_plus_c2_absorption", "anchor_unreliable"],
+      "caption_confidence_level": "no_call",
+      "no_call": true,
+      "no_call_reason": "anchor_unreliable_anchor_dependent_set"
+    },
+    "expected_valid_properties": [
+      "output_is_json",
+      "uses_posture_phrase_SA",
+      "uses_no_call_tone",
+      "no_class_assertion",
+      "mentions_anchor_unreliable_when_flagged"
+    ],
+    "forbidden_properties": [
+      "no_call_contradiction",
+      "any_class_vocabulary_present",
+      "uses_confident_tone",
+      "uses_hedged_tone",
+      "raw_class_label_in_caption"
+    ],
+    "example_valid_output": {
+      "caption_ko": "팔을 앞으로 둔 자세에서 기록된 손목 IMU 신호는 동작 기준점 신뢰도가 낮아, 현재 손목 센서 신호만으로는 안정적인 설명을 제공하기 어렵습니다.",
+      "confidence_phrase": "안정적인 설명을 제공하기 어렵습니다",
+      "uncertainty_phrase": "동작 기준점 신뢰도가 낮음",
+      "limitation_phrase": "",
+      "used_schema_fields": ["posture_canonical", "no_call", "no_call_reason", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "팔을 앞으로 둔 자세에서 깊이 부족 계열 신호가 나타납니다.",
+      "violation_notes": "no_call=true인데 class_vocabulary 표현('깊이 부족 계열로 해석 가능한 신호')이 등장 → no_call_contradiction."
+    }
+  },
+  {
+    "case_id": "case_09_no_call_low_confidence_no_class_set",
+    "purpose": "no_call=true + low_confidence_no_class_set. 신호 강도 부족 사유 표현.",
+    "input_schema": {
+      "sample_id": "EP03_C1_SA_rep09",
+      "posture_canonical": "SA",
+      "class_set": [],
+      "ambiguity_group": "no_call",
+      "uncertainty_flags": ["low_confidence_no_class_set"],
+      "caption_confidence_level": "no_call",
+      "no_call": true,
+      "no_call_reason": "low_confidence_no_class_set"
+    },
+    "expected_valid_properties": [
+      "output_is_json",
+      "uses_posture_phrase_SA",
+      "uses_no_call_tone",
+      "no_class_assertion"
+    ],
+    "forbidden_properties": [
+      "no_call_contradiction",
+      "any_class_vocabulary_present",
+      "fabricated_cause_explanation",
+      "uses_confident_tone",
+      "raw_class_label_in_caption"
+    ],
+    "example_valid_output": {
+      "caption_ko": "팔을 앞으로 둔 자세에서 측정된 손목 IMU 신호는 신호 강도가 부족하여, 현재 손목 센서 신호만으로는 안정적인 설명을 제공하기 어렵습니다.",
+      "confidence_phrase": "안정적인 설명을 제공하기 어렵습니다",
+      "uncertainty_phrase": "신호 강도가 부족함",
+      "limitation_phrase": "",
+      "used_schema_fields": ["posture_canonical", "no_call", "no_call_reason", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "팔을 앞으로 둔 자세에서 정상 패턴에 가까운 신호가 나타납니다.",
+      "violation_notes": "no_call=true인데 'C1: 정상 패턴에 가까운 신호'라는 class_vocabulary 표현이 등장 → no_call_contradiction."
+    }
+  },
+  {
+    "case_id": "case_10_class_set_size_2",
+    "purpose": "class_set 크기 2 표현 점검 (pair_c3_c4). 두 후보 모두 표현되어야 함.",
+    "input_schema": {
+      "sample_id": "EP01_C1_HW_rep01",
+      "posture_canonical": "HW",
+      "class_set": ["C3", "C4"],
+      "ambiguity_group": "pair_c3_c4",
+      "uncertainty_flags": ["pair_ambiguity_c3_c4"],
+      "caption_confidence_level": "hedged",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "preserves_class_set",
+      "expresses_both_C3_and_C4_via_combined_phrase",
+      "uses_hedged_tone"
+    ],
+    "forbidden_properties": [
+      "single_class_assertion_when_set_size_ge_2",
+      "class_set_narrowing",
+      "raw_class_label_in_caption"
+    ],
+    "example_valid_output": {
+      "caption_ko": "손을 허리에 둔 자세에서 측정된 손목 IMU 패턴은 복합 오류 후보 두 가지가 함께 나타나는 경계 신호로 보입니다. 단일 유형으로 좁히기 어렵습니다.",
+      "confidence_phrase": "단일 유형으로 좁히기 어렵습니다",
+      "uncertainty_phrase": "복합 오류 후보 두 가지가 함께 나타나는 경계 신호",
+      "limitation_phrase": "손목 센서 기준의 추정",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "손을 허리에 둔 자세에서 깊이 부족과 복합 오류 후보가 함께 나타나는 신호로 단정할 수 있습니다.",
+      "violation_notes": "C3 단일 단정으로 좁힘(원 논문 정의의 C3 표현 사용 + '단정할 수 있습니다'). C4 후보 누락. hedged 어조 위반."
+    }
+  },
+  {
+    "case_id": "case_11_class_set_size_3",
+    "purpose": "class_set 크기 3 표현 점검 (within_group_c1_c5_c6). 세 후보 모두 표현되어야 함.",
+    "input_schema": {
+      "sample_id": "EP01_C1_CA_rep01",
+      "posture_canonical": "CA",
+      "class_set": ["C1", "C5", "C6"],
+      "ambiguity_group": "within_group_c1_c5_c6",
+      "uncertainty_flags": ["within_group_ambiguity_c1_c5_c6", "anchor_unreliable"],
+      "caption_confidence_level": "low",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "preserves_class_set",
+      "expresses_C1_normal_and_knee_error_candidates",
+      "uses_low_tone",
+      "mentions_anchor_unreliable_when_flagged",
+      "no_left_right_direction"
+    ],
+    "forbidden_properties": [
+      "class_set_narrowing",
+      "single_class_assertion_when_set_size_ge_2",
+      "left_right_direction_claim",
+      "raw_class_label_in_caption"
+    ],
+    "example_valid_output": {
+      "caption_ko": "팔을 교차한 자세에서, 동작 기준점이 불안정하여 설명 신뢰도가 낮은 상태입니다. 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타날 가능성이 있으나, 후보군 수준으로만 해석하는 것이 적절합니다.",
+      "confidence_phrase": "후보군 수준으로만 해석하는 것이 적절합니다",
+      "uncertainty_phrase": "정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타남 (동작 기준점이 불안정하여 설명 신뢰도가 낮습니다)",
+      "limitation_phrase": "손목 센서 기준의 추정",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "팔을 교차한 자세에서 정상 패턴이 가장 가까운 후보입니다.",
+      "violation_notes": "size 3 class_set에서 C1 단일 단정으로 좁힘. C5/C6(무릎 관련 오류 후보) 표현 누락 → class_set narrowing. low 어조도 약화."
+    }
+  },
+  {
+    "case_id": "case_12_violation_knee_valgus_direct_claim",
+    "purpose": "FORBIDDEN demonstration. within_group hedged sample 위에서 knee valgus를 직접 표현하는 invalid output 패턴.",
+    "input_schema": {
+      "sample_id": "EP01_C1_CA_rep08",
+      "posture_canonical": "CA",
+      "class_set": ["C1", "C5", "C6"],
+      "ambiguity_group": "within_group_c1_c5_c6",
+      "uncertainty_flags": ["within_group_ambiguity_c1_c5_c6"],
+      "caption_confidence_level": "hedged",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "avoids_forbidden_biomechanics",
+      "no_left_right_direction",
+      "preserves_class_set"
+    ],
+    "forbidden_properties": [
+      "direct_knee_valgus_claim",
+      "left_right_direction_claim",
+      "class_set_narrowing",
+      "raw_class_label_in_caption"
+    ],
+    "example_valid_output": {
+      "caption_ko": "팔을 교차한 자세에서 측정된 손목 IMU 패턴은, 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호로 보입니다. 단일 유형으로 좁히기 어렵습니다.",
+      "confidence_phrase": "단일 유형으로 좁히기 어렵습니다",
+      "uncertainty_phrase": "정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호",
+      "limitation_phrase": "손목 센서 기준의 추정",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "팔을 교차한 자세에서 양측 무릎이 안쪽으로 들어가는 knee valgus 패턴이 관찰됩니다.",
+      "violation_notes": "(1) 'knee valgus' 직접 표현 — `step5_v2_forbidden_expressions.md` §1 #2 위반. (2) '양측' / '안쪽으로 들어가는' 좌우 방향 + 무릎 방향 단정 — #1, #17 위반."
+    }
+  },
+  {
+    "case_id": "case_13_violation_posterior_tilting_direct_claim",
+    "purpose": "FORBIDDEN demonstration. pair_c3_c4 sample에서 C3 원 정의의 posterior tilting을 직접 표현하는 invalid 패턴.",
+    "input_schema": {
+      "sample_id": "EP01_C3_HW_rep03",
+      "posture_canonical": "HW",
+      "class_set": ["C3", "C4"],
+      "ambiguity_group": "pair_c3_c4",
+      "uncertainty_flags": ["pair_ambiguity_c3_c4"],
+      "caption_confidence_level": "hedged",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "avoids_forbidden_biomechanics",
+      "uses_phrase_복합_오류_후보",
+      "preserves_class_set"
+    ],
+    "forbidden_properties": [
+      "posterior_tilting_claim",
+      "direct_knee_valgus_claim",
+      "raw_class_label_in_caption"
+    ],
+    "example_valid_output": {
+      "caption_ko": "손을 허리에 둔 자세에서 측정된 손목 IMU 패턴은 복합 오류 후보 두 가지가 함께 나타나는 경계 신호로 보입니다. 단일 유형으로 좁히기 어렵습니다.",
+      "confidence_phrase": "단일 유형으로 좁히기 어렵습니다",
+      "uncertainty_phrase": "복합 오류 후보 두 가지가 함께 나타나는 경계 신호",
+      "limitation_phrase": "손목 센서 기준의 추정",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "손을 허리에 둔 자세에서 골반이 뒤로 빠지는 posterior tilting과 함께 knee valgus 후보가 나타납니다.",
+      "violation_notes": "(1) 'posterior tilting' 영문 직접 표현 — §1 #14. (2) '골반이 뒤로 빠지는' 한국어 변형 — §1 #16. (3) 'knee valgus' 직접 — §1 #2. C3 원 논문 정의를 그대로 노출하면 안 됨."
+    }
+  },
+  {
+    "case_id": "case_14_violation_attention_term_leakage",
+    "purpose": "FORBIDDEN demonstration. confident_C2 sample에서 attention/phase/anchor 등 모델 내부 용어를 직접 노출하는 invalid 패턴.",
+    "input_schema": {
+      "sample_id": "EP01_C2_SA_rep04",
+      "posture_canonical": "SA",
+      "class_set": ["C2"],
+      "ambiguity_group": "confident_C2",
+      "uncertainty_flags": ["confident_C2"],
+      "caption_confidence_level": "confident",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "no_attention_terms",
+      "no_probability_terms",
+      "uses_confident_tone"
+    ],
+    "forbidden_properties": [
+      "attention_term_leakage",
+      "probability_term_leakage",
+      "raw_class_label_in_caption"
+    ],
+    "example_valid_output": {
+      "caption_ko": "팔을 앞으로 둔 자세에서 기록된 손목 IMU 신호는 깊이 부족 계열로 해석 가능한 패턴이 비교적 일관되게 나타납니다. 손목 센서 기준의 추정입니다.",
+      "confidence_phrase": "비교적 일관되게 나타납니다",
+      "uncertainty_phrase": "",
+      "limitation_phrase": "손목 센서 기준의 추정",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "모델 attention이 bottom_transition phase에 집중되었고 predictive entropy가 낮아, 깊이 부족 계열 신호로 비교적 일관되게 분류되었습니다.",
+      "violation_notes": "'attention', 'bottom_transition phase', 'predictive entropy' 모두 모델 내부 용어 — system prompt §6 위반. attention/phase는 일반 사용자 caption에서 금지 (정책 §3.2, §8.3)."
+    }
+  },
+  {
+    "case_id": "case_15_violation_class_set_narrowing",
+    "purpose": "FORBIDDEN demonstration. size 3 class_set에서 단일 후보로 좁히는 invalid 패턴.",
+    "input_schema": {
+      "sample_id": "EP01_C1_CA_rep04",
+      "posture_canonical": "CA",
+      "class_set": ["C1", "C5", "C6"],
+      "ambiguity_group": "within_group_c1_c5_c6",
+      "uncertainty_flags": ["within_group_ambiguity_c1_c5_c6"],
+      "caption_confidence_level": "hedged",
+      "no_call": false,
+      "no_call_reason": ""
+    },
+    "expected_valid_properties": [
+      "preserves_class_set",
+      "uses_hedged_tone",
+      "expresses_C1_normal_and_knee_error_candidates"
+    ],
+    "forbidden_properties": [
+      "class_set_narrowing",
+      "single_class_assertion_when_set_size_ge_2",
+      "raw_class_label_in_caption"
+    ],
+    "example_valid_output": {
+      "caption_ko": "팔을 교차한 자세에서 측정된 손목 IMU 패턴은, 정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호로 보입니다. 단일 유형으로 좁히기 어렵습니다.",
+      "confidence_phrase": "단일 유형으로 좁히기 어렵습니다",
+      "uncertainty_phrase": "정상 패턴과 무릎 관련 오류 후보 패턴이 함께 나타나는 경계 신호",
+      "limitation_phrase": "손목 센서 기준의 추정",
+      "used_schema_fields": ["posture_canonical", "class_set", "ambiguity_group", "uncertainty_flags", "caption_confidence_level"]
+    },
+    "example_invalid_output": {
+      "caption_ko": "팔을 교차한 자세에서 C1, C5, C6 중 C5에 가장 잘 맞는 패턴입니다.",
+      "violation_notes": "(1) raw class label(C1, C5, C6) 직접 노출 — Step 11 검사 위반. (2) 'C5에 가장 잘 맞는' 단일 후보 narrowing — class_set narrowing. (3) hedged 어조 위반."
+    }
+  }
+]

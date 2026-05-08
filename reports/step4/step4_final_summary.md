@@ -149,13 +149,13 @@ threshold recalibration, schema output 재생성, caption template 작성을
 
 ## 8. Threshold 후보 요약 (val 기준, commit 아님)
 
-| threshold | raw | zscore |
-|---|---:|---:|
-| `confident_C2_threshold` | 0.3800 | 0.3900 |
-| `non_trivial_C2_threshold` | 0.1123 | 0.1059 |
-| `within_group_threshold` | 0.1650 | 0.1646 |
+| threshold                      |    raw | zscore |
+| ------------------------------ | -----: | -----: |
+| `confident_C2_threshold`       | 0.3800 | 0.3900 |
+| `non_trivial_C2_threshold`     | 0.1123 | 0.1059 |
+| `within_group_threshold`       | 0.1650 | 0.1646 |
 | `anchor_suppression_threshold` | 0.5000 | 0.5000 |
-| `anchor_no_call_threshold` | 0.2500 | 0.2500 |
+| `anchor_no_call_threshold`     | 0.2500 | 0.2500 |
 
 **해석**:
 - 모든 임계값은 **val split 기준** 후보값이다 (test 누수 없음).
@@ -171,10 +171,10 @@ threshold recalibration, schema output 재생성, caption template 작성을
 
 ### 9.1 caption_confidence_level
 
-| 조건 | confident | hedged | low | no_call |
-|---|---:|---:|---:|---:|
-| raw | 723 | 5904 | 230 | 2418 |
-| zscore | 725 | 5883 | 254 | 2413 |
+| 조건     | confident | hedged | low | no_call |
+| ------ | --------: | -----: | --: | ------: |
+| raw    |       723 |   5904 | 230 |    2418 |
+| zscore |       725 |   5883 | 254 |    2413 |
 
 ### 9.2 class_set_prediction
 
@@ -214,10 +214,10 @@ threshold recalibration, schema output 재생성, caption template 작성을
 
 **no_call reason closure 분해**:
 
-| 조건 | 총 no_call | low_confidence_no_class_set | anchor-driven | posture_unknown |
-|---|---:|---:|---:|---:|
-| raw | 2418 | 2393 | 25 | 0 |
-| zscore | 2413 | 2391 | 22 | 0 |
+| 조건     | 총 no_call | low_confidence_no_class_set | anchor-driven | posture_unknown |
+| ------ | --------: | --------------------------: | ------------: | --------------: |
+| raw    |      2418 |                        2393 |            25 |               0 |
+| zscore |      2413 |                        2391 |            22 |               0 |
 
 `posture_unknown`이 0인 이유는 입력 데이터에 invalid posture가 없기
 때문이다 (manifest의 `posture_canonical`은 모두 SA/CA/HW). anchor-driven
@@ -247,14 +247,14 @@ no_call(25 / 22)은 모두 `anchor_reliability < 0.25` AND `class_set ∈
 
 ## 12. 아직 commit하지 않는 결정
 
-| 결정 항목 | 상태 |
-|---|---|
-| final normalization (raw vs zscore) | 미commit (두 조건 모두 후속 단계 후보로 유지) |
-| final threshold values | 미commit (val 기반 후보값만 보고) |
-| final model architecture | 미commit (baseline은 비교 기준이며 최종 약속 아님) |
-| caption wording | 미commit (Step 4 범위 외) |
-| performance success criterion | 미commit (Step 3 §11에 의해 범위 외) |
-| primary deployed branch (raw or zscore) | 미commit |
+| 결정 항목                                   | 상태                                   |
+| --------------------------------------- | ------------------------------------ |
+| final normalization (raw vs zscore)     | 미commit (두 조건 모두 후속 단계 후보로 유지)       |
+| final threshold values                  | 미commit (val 기반 후보값만 보고)             |
+| final model architecture                | 미commit (baseline은 비교 기준이며 최종 약속 아님) |
+| caption wording                         | 미commit (Step 4 범위 외)                |
+| performance success criterion           | 미commit (Step 3 §11에 의해 범위 외)        |
+| primary deployed branch (raw or zscore) | 미commit                              |
 
 ---
 

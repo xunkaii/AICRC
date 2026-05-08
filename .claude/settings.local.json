@@ -21,7 +21,10 @@
       "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -X utf8 scripts/train_step4r_attention_rnn.py)",
       "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -X utf8 scripts/calibrate_step4r_attention_temperature.py)",
       "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -X utf8 scripts/generate_step4r_attention_schema_outputs.py)",
-      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -X utf8 scripts/analyze_step4r_attention_phase.py)"
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_env\\\\python.exe' -X utf8 scripts/analyze_step4r_attention_phase.py)",
+      "PowerShell(New-Item *)",
+      "PowerShell(& 'C:\\\\Users\\\\user\\\\anaconda3\\\\envs\\\\aicrc_step4\\\\python.exe' -X utf8 -c \"import json; data = json.load\\(open\\('reports/step6_v2/step6_v2_golden_test_cases.json', encoding='utf-8'\\)\\); print\\(f'JSON valid: {len\\(data\\)} cases'\\); print\\('case ids:'\\); [print\\(f'  {c[\\\\\"case_id\\\\\"]}'\\) for c in data]\"; Write-Output \"\"; Write-Output \"=== reports/step6_v2 contents ===\"; Get-ChildItem 'reports\\\\step6_v2' -File | Select-Object Name,Length | Format-Table -AutoSize)",
+      "Bash(/c/Users/user/anaconda3/envs/aicrc_step4/python.exe *)"
     ]
   },
   "mcpServers": {
