@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600"
+     font-family="'Malgun Gothic','맑은 고딕','Apple SD Gothic Neo','Noto Sans KR',sans-serif">
+
+  <!-- ===================== Definitions ===================== -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#374151"/>
+    </marker>
+    <marker id="arrowMuted" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9CA3AF"/>
+    </marker>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="1" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.18"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- ===================== Background ===================== -->
+  <rect width="900" height="600" fill="#FFFFFF"/>
+
+  <!-- ===================== Title ===================== -->
+  <text x="450" y="34" text-anchor="middle" font-size="19" font-weight="700" fill="#111827">
+    Research Reframing — Sensor → Schema → Caption Pipeline
+  </text>
+  <line x1="40" y1="48" x2="860" y2="48" stroke="#E5E7EB" stroke-width="1"/>
+
+  <!-- ===================== Old approach (faded + struck) ===================== -->
+  <g opacity="0.55">
+    <text x="50" y="79" font-size="11" font-weight="700" fill="#6B7280">기존</text>
+
+    <g font-size="11" fill="#6B7280">
+      <rect x="92"  y="65" width="78" height="22" rx="4" fill="#F3F4F6" stroke="#9CA3AF"/>
+      <text x="131" y="80" text-anchor="middle">Sensor</text>
+      <line x1="170" y1="76" x2="186" y2="76" stroke="#9CA3AF" stroke-width="1.4" marker-end="url(#arrowMuted)"/>
+
+      <rect x="190" y="65" width="92" height="22" rx="4" fill="#F3F4F6" stroke="#9CA3AF"/>
+      <text x="236" y="80" text-anchor="middle">Classifier</text>
+      <line x1="282" y1="76" x2="298" y2="76" stroke="#9CA3AF" stroke-width="1.4" marker-end="url(#arrowMuted)"/>
+
+      <rect x="302" y="65" width="78" height="22" rx="4" fill="#F3F4F6" stroke="#9CA3AF"/>
+      <text x="341" y="80" text-anchor="middle">argmax</text>
+      <line x1="380" y1="76" x2="396" y2="76" stroke="#9CA3AF" stroke-width="1.4" marker-end="url(#arrowMuted)"/>
+
+      <rect x="400" y="65" width="100" height="22" rx="4" fill="#F3F4F6" stroke="#9CA3AF"/>
+      <text x="450" y="80" text-anchor="middle">Single label</text>
+    </g>
+
+    <!-- strikethrough -->
+    <line x1="90" y1="76" x2="502" y2="76" stroke="#DC2626" stroke-width="1.6"/>
+  </g>
+  <text x="520" y="80" font-size="11" font-style="italic" fill="#B91C1C">
+    ✗  문제: 단일 argmax 출력의 한계
+  </text>
+
+  <line x1="40" y1="100" x2="860" y2="100" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- ===================== Main pipeline ===================== -->
+  <!-- Sensor -->
+  <g filter="url(#softShadow)">
+    <rect x="50" y="140" width="170" height="120" rx="10" fill="#F3F4F6" stroke="#6B7280" stroke-width="2"/>
+  </g>
+  <text x="135" y="170" text-anchor="middle" font-size="16" font-weight="700" fill="#111827">Sensor</text>
+  <line x1="80" y1="180" x2="190" y2="180" stroke="#D1D5DB" stroke-width="1"/>
+  <text x="135" y="202" text-anchor="middle" font-size="11" fill="#374151">손목 IMU</text>
+  <text x="135" y="220" text-anchor="middle" font-size="11" fill="#374151">acc x/y/z · gyro x/y/z</text>
+  <text x="135" y="238" text-anchor="middle" font-size="11" fill="#374151">len=128, 6ch + posture</text>
+
+  <!-- Arrow Sensor → Schema -->
+  <line x1="225" y1="200" x2="285" y2="200" stroke="#374151" stroke-width="2.2" marker-end="url(#arrow)"/>
+
+  <!-- Schema (emphasized, larger) -->
+  <g filter="url(#softShadow)">
+    <rect x="290" y="120" width="320" height="170" rx="12" fill="#F5F3FF" stroke="#7C3AED" stroke-width="3"/>
+  </g>
+  <text x="450" y="148" text-anchor="middle" font-size="19" font-weight="700" fill="#5B21B6">Schema</text>
+  <text x="450" y="164" text-anchor="middle" font-size="10" font-style="italic" fill="#7C3AED">uncertainty-aware</text>
+
+  <g font-size="11" fill="#4C1D95">
+    <rect x="306" y="178" width="288" height="24" rx="5" fill="#FFFFFF" stroke="#C4B5FD"/>
+    <text x="316" y="194">▸ class_set</text>
+    <text x="585" y="194" text-anchor="end" font-style="italic" fill="#7C3AED">(복수 후보)</text>
+
+    <rect x="306" y="206" width="288" height="24" rx="5" fill="#FFFFFF" stroke="#C4B5FD"/>
+    <text x="316" y="222">▸ uncertainty_flags</text>
+
+    <rect x="306" y="234" width="288" height="24" rx="5" fill="#FFFFFF" stroke="#C4B5FD"/>
+    <text x="316" y="250">▸ confidence_level</text>
+
+    <rect x="306" y="262" width="288" height="24" rx="5" fill="#FFFFFF" stroke="#C4B5FD"/>
+    <text x="316" y="278">▸ no_call / no_call_reason</text>
+  </g>
+
+  <!-- Arrow Schema → Caption -->
+  <line x1="615" y1="200" x2="675" y2="200" stroke="#374151" stroke-width="2.2" marker-end="url(#arrow)"/>
+
+  <!-- Caption -->
+  <g filter="url(#softShadow)">
+    <rect x="680" y="140" width="170" height="120" rx="10" fill="#F0FDFA" stroke="#0D9488" stroke-width="2"/>
+  </g>
+  <text x="765" y="170" text-anchor="middle" font-size="16" font-weight="700" fill="#115E59">Caption</text>
+  <line x1="710" y1="180" x2="820" y2="180" stroke="#99F6E4" stroke-width="1"/>
+  <text x="765" y="202" text-anchor="middle" font-size="11" fill="#115E59">한국어 caption</text>
+  <text x="765" y="220" text-anchor="middle" font-size="11" fill="#115E59">schema-grounded</text>
+  <text x="765" y="238" text-anchor="middle" font-size="11" fill="#115E59">closed vocabulary</text>
+
+  <!-- ===================== Principles (3 columns) ===================== -->
+  <!-- Column dividers (light) -->
+  <line x1="450" y1="310" x2="450" y2="410" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="640" y1="310" x2="640" y2="410" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="260" y1="310" x2="260" y2="410" stroke="#E5E7EB" stroke-width="1"/>
+
+  <!-- Col 1: under Sensor -->
+  <g>
+    <text x="135" y="328" text-anchor="middle" font-size="12" font-weight="700" fill="#374151">▼ 관측 한계</text>
+    <text x="135" y="352" text-anchor="middle" font-size="10.5" fill="#4B5563">손목 가속도 · 각속도</text>
+    <text x="135" y="372" text-anchor="middle" font-size="10.5" fill="#4B5563">무릎 · 골반 직접 관측 불가</text>
+    <text x="135" y="392" text-anchor="middle" font-size="10.5" fill="#4B5563">단일 class 단정 위험</text>
+  </g>
+
+  <!-- Col 2: under Schema -->
+  <g>
+    <text x="450" y="328" text-anchor="middle" font-size="12" font-weight="700" fill="#5B21B6">▼ 표현 원칙</text>
+    <text x="450" y="352" text-anchor="middle" font-size="10.5" fill="#5B21B6">Text는 학습 target이 아님</text>
+    <text x="450" y="372" text-anchor="middle" font-size="10.5" fill="#5B21B6">LLM은 classifier가 아님</text>
+    <text x="450" y="392" text-anchor="middle" font-size="10.5" fill="#5B21B6">uncertainty-aware output</text>
+  </g>
+
+  <!-- Col 3: under Caption -->
+  <g>
+    <text x="765" y="328" text-anchor="middle" font-size="12" font-weight="700" fill="#115E59">▼ 출력 규칙</text>
+    <text x="765" y="352" text-anchor="middle" font-size="10.5" fill="#115E59">LLM = 표현층 (판단 X)</text>
+    <text x="765" y="372" text-anchor="middle" font-size="10.5" fill="#115E59">schema 외 판단 금지</text>
+    <text x="765" y="392" text-anchor="middle" font-size="10.5" fill="#115E59">생체역학 단정 금지</text>
+  </g>
+
+  <!-- ===================== Research Question ===================== -->
+  <g filter="url(#softShadow)">
+    <rect x="60" y="430" width="780" height="135" rx="10" fill="#FFFBEB" stroke="#D97706" stroke-width="2"/>
+  </g>
+  <text x="80" y="456" font-size="11" font-weight="700" fill="#92400E" letter-spacing="0.5">RESEARCH QUESTION</text>
+  <line x1="80" y1="464" x2="820" y2="464" stroke="#FCD34D" stroke-width="1"/>
+
+  <text x="450" y="498" text-anchor="middle" font-size="14" font-style="italic" fill="#78350F">
+    “손목 IMU만으로 관측 가능한 스쿼트 신호의 불확실성 구조를 모델링하고,
+  </text>
+  <text x="450" y="522" text-anchor="middle" font-size="14" font-style="italic" fill="#78350F">
+    이를 schema와 한국어 caption으로 정직하게 전달할 수 있는가?”
+  </text>
+  <text x="450" y="552" text-anchor="middle" font-size="10" fill="#A16207">
+    — sensor-to-text generation 아님 · 학습 target은 schema · LLM은 presentation layer
+  </text>
+</svg>
