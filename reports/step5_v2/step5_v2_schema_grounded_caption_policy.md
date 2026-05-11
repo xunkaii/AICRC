@@ -1,47 +1,47 @@
-# Step 5_v2 — Schema-grounded Caption Policy
+﻿# Step 5_v2 ??Schema-grounded Caption Policy
 
-본 문서는 Step 4R-B BiGRU+Attention의 *calibrated* schema output을 한국어 caption으로 변환하기 위한 **정책 명세서**이다. 본 문서는 caption을 생성하지 않으며, caption 생성 코드도 만들지 않는다. 본 문서는 prompt 본문, 어휘표, 금지 표현, confidence별 문장 원칙을 *고정*한다.
+蹂?臾몄꽌??Step 4R-B BiGRU+Attention??*calibrated* schema output???쒓뎅??caption?쇰줈 蹂?섑븯湲??꾪븳 **?뺤콉 紐낆꽭??*?대떎. 蹂?臾몄꽌??caption???앹꽦?섏? ?딆쑝硫? caption ?앹꽦 肄붾뱶??留뚮뱾吏 ?딅뒗?? 蹂?臾몄꽌??prompt 蹂몃Ц, ?댄쐶?? 湲덉? ?쒗쁽, confidence蹂?臾몄옣 ?먯튃??*怨좎젙*?쒕떎.
 
-본 문서가 의존하는 선행 문서:
+蹂?臾몄꽌媛 ?섏〈?섎뒗 ?좏뻾 臾몄꽌:
 
-- `reports/step4r/step4_research_reframing.md` — 본 연구의 reframing (특히 §6 schema-grounded LLM caption, §11 명시적 제외 사항).
-- `reports/step3/step3_output_schema_uncertainty_policy.md` — Step 3 출력 스키마 및 불확실성 정책.
-- `reports/step4r/4rb_attention/step4r_bigru_attention_schema_results.md` — 4R-B calibrated schema 결과.
-- `reports/step4r/4rb_attention/step4r_attention_phase_analysis.md` — attention phase 분석 (정보 출처 한정 용도).
+- `reports/step4r/step4_research_reframing.md` ??蹂??곌뎄??reframing (?뱁엳 짠6 schema-grounded LLM caption, 짠11 紐낆떆???쒖쇅 ?ы빆).
+- `reports/step3/step3_output_schema_uncertainty_policy.md` ??Step 3 異쒕젰 ?ㅽ궎留?諛?遺덊솗?ㅼ꽦 ?뺤콉.
+- `reports/step4r/4rb_attention/step4r_bigru_attention_schema_results.md` ??4R-B calibrated schema 寃곌낵.
+- `reports/step4r/4rb_attention/step4r_attention_phase_analysis.md` ??attention phase 遺꾩꽍 (?뺣낫 異쒖쿂 ?쒖젙 ?⑸룄).
 
-본 문서는 기존 `reports/step5/`(legacy rule/template caption)과 명확히 분리된다 (`reports/step4_research_reframing.md` §10 보존 정책).
-
----
-
-## 1. Step 5_v2의 목적
-
-Step 5_v2는 **schema-to-caption presentation layer**의 정책을 고정한다. 다음 두 가지가 본 단계의 핵심 입장이다.
-
-1. 본 시스템은 **sensor-to-text generation이 아니다.** caption은 학습 target이 아니며, schema 출력이 *이미 존재하는 사실*을 한국어로 표현하는 표현층(presentation layer)일 뿐이다.
-2. **LLM은 판단자(judge / classifier)가 아니라 표현층이다.** LLM은 schema에 적힌 사실만 한국어로 풀어낸다. 새 클래스를 추론하거나 class_set을 좁히거나 측정되지 않은 생체역학 양을 도입하면 모두 invalid output이다.
-
-본 단계 종료 후, Step 6_v2 (prompt finalization) 와 Step 7_v2 (caption generation prototype) 가 본 정책 위에서 진행된다.
+蹂?臾몄꽌??湲곗〈 `reports/step5/`(legacy rule/template caption)怨?紐낇솗??遺꾨━?쒕떎 (`reports/step4r/step4_research_reframing.md` 짠10 蹂댁〈 ?뺤콉).
 
 ---
 
-## 2. 입력 schema 필드
+## 1. Step 5_v2??紐⑹쟻
 
-caption layer는 rep마다 다음 필드를 입력으로 받는다 (`reports/step4r/4rb_attention/step4r_bigru_attention_schema_outputs_calibrated.csv`의 컬럼).
+Step 5_v2??**schema-to-caption presentation layer**???뺤콉??怨좎젙?쒕떎. ?ㅼ쓬 ??媛吏媛 蹂??④퀎???듭떖 ?낆옣?대떎.
 
-| 필드 | 타입 | 출처 |
+1. 蹂??쒖뒪?쒖? **sensor-to-text generation???꾨땲??** caption? ?숈뒿 target???꾨땲硫? schema 異쒕젰??*?대? 議댁옱?섎뒗 ?ъ떎*???쒓뎅?대줈 ?쒗쁽?섎뒗 ?쒗쁽痢?presentation layer)??肉먯씠??
+2. **LLM? ?먮떒??judge / classifier)媛 ?꾨땲???쒗쁽痢듭씠??** LLM? schema???곹엺 ?ъ떎留??쒓뎅?대줈 ??대궦?? ???대옒?ㅻ? 異붾줎?섍굅??class_set??醫곹엳嫄곕굹 痢≪젙?섏? ?딆? ?앹껜??븰 ?묒쓣 ?꾩엯?섎㈃ 紐⑤몢 invalid output?대떎.
+
+蹂??④퀎 醫낅즺 ?? Step 6_v2 (prompt finalization) ? Step 7_v2 (caption generation prototype) 媛 蹂??뺤콉 ?꾩뿉??吏꾪뻾?쒕떎.
+
+---
+
+## 2. ?낅젰 schema ?꾨뱶
+
+caption layer??rep留덈떎 ?ㅼ쓬 ?꾨뱶瑜??낅젰?쇰줈 諛쏅뒗??(`reports/step4r/4rb_attention/step4r_bigru_attention_schema_outputs_calibrated.csv`??而щ읆).
+
+| ?꾨뱶 | ???| 異쒖쿂 |
 |---|---|---|
 | `sample_id` | string | manifest |
 | `posture_canonical` | enum {`SA`, `CA`, `HW`} | manifest |
-| `class_set` | list[string] (whitelist 8종) | 4R-B schema rule |
-| `class_set_posterior_mass` | float | calibrated posterior 합 |
+| `class_set` | list[string] (whitelist 8醫? | 4R-B schema rule |
+| `class_set_posterior_mass` | float | calibrated posterior ??|
 | `top1_class` | string | calibrated argmax |
 | `top1_prob_calibrated` | float | calibrated posterior |
 | `top2_class` | string | calibrated posterior |
 | `top2_prob_calibrated` | float | calibrated posterior |
 | `top1_top2_margin_calibrated` | float | calibrated posterior |
 | `predictive_entropy_calibrated` | float | calibrated posterior |
-| `ambiguity_group` | enum (§6 참조) | schema rule |
-| `uncertainty_flags` | list[string] (Step 3 §7 closed vocab) | schema rule |
+| `ambiguity_group` | enum (짠6 李몄“) | schema rule |
+| `uncertainty_flags` | list[string] (Step 3 짠7 closed vocab) | schema rule |
 | `no_call` | bool | schema rule |
 | `no_call_reason` | enum | schema rule |
 | `caption_confidence_level` | enum {`confident`, `hedged`, `low`, `no_call`} | schema rule |
@@ -50,199 +50,199 @@ caption layer는 rep마다 다음 필드를 입력으로 받는다 (`reports/ste
 
 ---
 
-## 3. caption에 반영할 필드와 반영하지 않을 필드
+## 3. caption??諛섏쁺???꾨뱶? 諛섏쁺?섏? ?딆쓣 ?꾨뱶
 
-### 3.1 일반 사용자 caption에 **반영하는** 필드
+### 3.1 ?쇰컲 ?ъ슜??caption??**諛섏쁺?섎뒗** ?꾨뱶
 
-- `posture_canonical` — 자세를 *해석 조건*으로 명시 (자세 자체를 오류로 표현하지 않음).
-- `class_set` — class_set 안의 모든 후보를 *공동 헤지*로 표현. 단일 후보로 좁히지 않는다.
-- `caption_confidence_level` — 어조와 단정도(definiteness)를 결정.
-- `uncertainty_flags` — 어떤 모호함을 명시할지를 결정.
-- `no_call` / `no_call_reason` — 보류 메시지 형태와 사유 표현.
-- `ambiguity_group` — class_set과 flag를 묶어 정해진 단일 표현 분기를 고름.
-- limitation notice (`limitation_phrase`) — "손목 센서 기준" 등 sensor-grounded notice.
+- `posture_canonical` ???먯꽭瑜?*?댁꽍 議곌굔*?쇰줈 紐낆떆 (?먯꽭 ?먯껜瑜??ㅻ쪟濡??쒗쁽?섏? ?딆쓬).
+- `class_set` ??class_set ?덉쓽 紐⑤뱺 ?꾨낫瑜?*怨듬룞 ?ㅼ?*濡??쒗쁽. ?⑥씪 ?꾨낫濡?醫곹엳吏 ?딅뒗??
+- `caption_confidence_level` ???댁“? ?⑥젙??definiteness)瑜?寃곗젙.
+- `uncertainty_flags` ???대뼡 紐⑦샇?⑥쓣 紐낆떆?좎?瑜?寃곗젙.
+- `no_call` / `no_call_reason` ??蹂대쪟 硫붿떆吏 ?뺥깭? ?ъ쑀 ?쒗쁽.
+- `ambiguity_group` ??class_set怨?flag瑜?臾띠뼱 ?뺥빐吏??⑥씪 ?쒗쁽 遺꾧린瑜?怨좊쫫.
+- limitation notice (`limitation_phrase`) ??"?먮ぉ ?쇱꽌 湲곗?" ??sensor-grounded notice.
 
-### 3.2 일반 사용자 caption에 **직접 반영하지 않는** 필드
+### 3.2 ?쇰컲 ?ъ슜??caption??**吏곸젒 諛섏쁺?섏? ?딅뒗** ?꾨뱶
 
-다음은 caption 본문(`caption_ko`)에 *수치*나 *모델 내부 용어*로 직접 노출하지 않는다.
+?ㅼ쓬? caption 蹂몃Ц(`caption_ko`)??*?섏튂*??*紐⑤뜽 ?대? ?⑹뼱*濡?吏곸젒 ?몄텧?섏? ?딅뒗??
 
-- raw probability 숫자 (`top1_prob_calibrated`, `top2_prob_calibrated`, `class_set_posterior_mass`)
-- `predictive_entropy_calibrated` 숫자
-- attention entropy / attention peak phase / phase mass / anchor-attention distance (Step 4R-B post 3/3 산출물 전체)
+- raw probability ?レ옄 (`top1_prob_calibrated`, `top2_prob_calibrated`, `class_set_posterior_mass`)
+- `predictive_entropy_calibrated` ?レ옄
+- attention entropy / attention peak phase / phase mass / anchor-attention distance (Step 4R-B post 3/3 ?곗텧臾??꾩껜)
 
-이 정보는 분류 결정과 schema 분기를 *형성*하는 데 이미 사용되었으며, caption 어조에 *간접적으로* 반영된다 (예: top1_prob이 낮으면 confidence가 hedged/low로 강등됨). 사용자 caption에 숫자나 attention 용어로 *직접 노출*하지 않는다.
+???뺣낫??遺꾨쪟 寃곗젙怨?schema 遺꾧린瑜?*?뺤꽦*?섎뒗 ???대? ?ъ슜?섏뿀?쇰ŉ, caption ?댁“??*媛꾩젒?곸쑝濡? 諛섏쁺?쒕떎 (?? top1_prob????쑝硫?confidence媛 hedged/low濡?媛뺣벑??. ?ъ슜??caption???レ옄??attention ?⑹뼱濡?*吏곸젒 ?몄텧*?섏? ?딅뒗??
 
-### 3.3 technical report용 caption variant (optional)
+### 3.3 technical report??caption variant (optional)
 
-논문 figure / appendix용으로 별도의 *technical caption variant*는 위 §3.2의 항목을 선택적으로 포함할 수 있다. 단,
+?쇰Ц figure / appendix?⑹쑝濡?蹂꾨룄??*technical caption variant*????짠3.2????ぉ???좏깮?곸쑝濡??ы븿?????덈떎. ??
 
-- 이 variant는 **별도의 출력 채널**로 다룬다 (`caption_technical_md` 등 별도 필드).
-- 일반 사용자 caption(`caption_ko`)과 *섞이지 않는다*.
-- 본 정책은 일반 사용자 caption에 한정한다.
+- ??variant??**蹂꾨룄??異쒕젰 梨꾨꼸**濡??ㅻ，??(`caption_technical_md` ??蹂꾨룄 ?꾨뱶).
+- ?쇰컲 ?ъ슜??caption(`caption_ko`)怨?*?욎씠吏 ?딅뒗??.
+- 蹂??뺤콉? ?쇰컲 ?ъ슜??caption???쒖젙?쒕떎.
 
 ---
 
-## 4. confidence별 문장 정책
+## 4. confidence蹂?臾몄옣 ?뺤콉
 
 ### 4.1 `confident`
 
-- 단일 class_set (본 시스템에서는 사실상 `["C2"]`만 도달) 또는 *그에 준하는 안정 신호*에서만 사용.
-- "손목 센서 기준" 한계 명시는 그대로 유지.
-- 금지: "명확히", "확실히", "진단된다", "정상이다", "오류가 없다" 등 단정/의학 표현.
-- 허용: "비교적 일관되게 나타납니다", "상대적으로 안정적인 신호입니다" (§2 vocabulary 참조).
+- ?⑥씪 class_set (蹂??쒖뒪?쒖뿉?쒕뒗 ?ъ떎??`["C2"]`留??꾨떖) ?먮뒗 *洹몄뿉 以?섎뒗 ?덉젙 ?좏샇*?먯꽌留??ъ슜.
+- "?먮ぉ ?쇱꽌 湲곗?" ?쒓퀎 紐낆떆??洹몃?濡??좎?.
+- 湲덉?: "紐낇솗??, "?뺤떎??, "吏꾨떒?쒕떎", "?뺤긽?대떎", "?ㅻ쪟媛 ?녿떎" ???⑥젙/?섑븰 ?쒗쁽.
+- ?덉슜: "鍮꾧탳???쇨??섍쾶 ?섑??⑸땲??, "?곷??곸쑝濡??덉젙?곸씤 ?좏샇?낅땲?? (짠2 vocabulary 李몄“).
 
 ### 4.2 `hedged`
 
-- 본 시스템의 **기본 문장 유형**이다 (test 분포 약 74%, `step4r_bigru_attention_schema_results.md` §3).
-- 어조: "~에 가까운 패턴이 나타납니다", "~ 가능성이 함께 나타납니다", "단일 유형으로 단정하기 어렵습니다".
-- class_set 전체를 *공동 후보*로 제시하며, 어느 하나로 좁히지 않는다.
+- 蹂??쒖뒪?쒖쓽 **湲곕낯 臾몄옣 ?좏삎**?대떎 (test 遺꾪룷 ??74%, `step4r_bigru_attention_schema_results.md` 짠3).
+- ?댁“: "~??媛源뚯슫 ?⑦꽩???섑??⑸땲??, "~ 媛?μ꽦???④퍡 ?섑??⑸땲??, "?⑥씪 ?좏삎?쇰줈 ?⑥젙?섍린 ?대졄?듬땲??.
+- class_set ?꾩껜瑜?*怨듬룞 ?꾨낫*濡??쒖떆?섎ŉ, ?대뒓 ?섎굹濡?醫곹엳吏 ?딅뒗??
 
 ### 4.3 `low`
 
-- 불확실성이 큼을 *명시적*으로 표면화.
-- 가능한 후보군만 제시하고, 구체 오류 단정은 금지.
-- 어조: "불확실성이 큽니다", "후보군 수준으로만 해석하는 것이 적절합니다".
-- `anchor_unreliable` flag가 동반된 경우는 §6.6 참조.
+- 遺덊솗?ㅼ꽦???쇱쓣 *紐낆떆???쇰줈 ?쒕㈃??
+- 媛?ν븳 ?꾨낫援곕쭔 ?쒖떆?섍퀬, 援ъ껜 ?ㅻ쪟 ?⑥젙? 湲덉?.
+- ?댁“: "遺덊솗?ㅼ꽦???쎈땲??, "?꾨낫援??섏??쇰줈留??댁꽍?섎뒗 寃껋씠 ?곸젅?⑸땲??.
+- `anchor_unreliable` flag媛 ?숇컲??寃쎌슦??짠6.6 李몄“.
 
 ### 4.4 `no_call`
 
-- 분류 판단을 보류한다.
-- 어조: "현재 손목 센서 신호만으로는 안정적인 설명을 제공하기 어렵습니다".
-- 원인 후보를 *과도하게 설명하지 않는다* — 사용자에게 자세 교정 가이드를 *조작*하지 않는다.
-- `no_call_reason`에 따라 짧은 사유 한 줄(자세 입력 누락 / 신호 강도 부족 / 동작 기준점 신뢰도 낮음)만 추가 가능.
+- 遺꾨쪟 ?먮떒??蹂대쪟?쒕떎.
+- ?댁“: "?꾩옱 ?먮ぉ ?쇱꽌 ?좏샇留뚯쑝濡쒕뒗 ?덉젙?곸씤 ?ㅻ챸???쒓났?섍린 ?대졄?듬땲??.
+- ?먯씤 ?꾨낫瑜?*怨쇰룄?섍쾶 ?ㅻ챸?섏? ?딅뒗?? ???ъ슜?먯뿉寃??먯꽭 援먯젙 媛?대뱶瑜?*議곗옉*?섏? ?딅뒗??
+- `no_call_reason`???곕씪 吏㏃? ?ъ쑀 ??以??먯꽭 ?낅젰 ?꾨씫 / ?좏샇 媛뺣룄 遺議?/ ?숈옉 湲곗????좊ː????쓬)留?異붽? 媛??
 
 ---
 
-## 5. class_set size별 문장 정책
+## 5. class_set size蹂?臾몄옣 ?뺤콉
 
-`class_set_prediction`의 길이에 따라 분기.
+`class_set_prediction`??湲몄씠???곕씪 遺꾧린.
 
-| size | 정책 |
+| size | ?뺤콉 |
 |---:|---|
-| 0 | `no_call`로만 처리 (§4.4). 클래스 표현 어휘를 사용하지 않는다. |
-| 1 | `class_set[0]`을 중심으로 설명. **단, `caption_confidence_level`이 hedged 이하이면 단정 금지** — 어조는 confidence 정책(§4)을 따른다. |
-| 2 | "A 또는 B 중 하나"보다 **"A/B 경계 패턴"**, **"A 계열과 B 계열이 함께 나타나는 신호"**로 표현. 두 후보 중 하나를 좁히지 않는다. |
-| 3 | `ambiguity_group` 중심 설명 (§6). 개별 class를 하나로 좁히지 않는다. 본 시스템에서 size=3은 `[C1, C5, C6]` 또는 `[C3, C4, C2]`만 가능 (Step 3 §4 whitelist). |
+| 0 | `no_call`濡쒕쭔 泥섎━ (짠4.4). ?대옒???쒗쁽 ?댄쐶瑜??ъ슜?섏? ?딅뒗?? |
+| 1 | `class_set[0]`??以묒떖?쇰줈 ?ㅻ챸. **?? `caption_confidence_level`??hedged ?댄븯?대㈃ ?⑥젙 湲덉?** ???댁“??confidence ?뺤콉(짠4)???곕Ⅸ?? |
+| 2 | "A ?먮뒗 B 以??섎굹"蹂대떎 **"A/B 寃쎄퀎 ?⑦꽩"**, **"A 怨꾩뿴怨?B 怨꾩뿴???④퍡 ?섑??섎뒗 ?좏샇"**濡??쒗쁽. ???꾨낫 以??섎굹瑜?醫곹엳吏 ?딅뒗?? |
+| 3 | `ambiguity_group` 以묒떖 ?ㅻ챸 (짠6). 媛쒕퀎 class瑜??섎굹濡?醫곹엳吏 ?딅뒗?? 蹂??쒖뒪?쒖뿉??size=3? `[C1, C5, C6]` ?먮뒗 `[C3, C4, C2]`留?媛??(Step 3 짠4 whitelist). |
 
 ---
 
-## 6. 주요 ambiguity group별 문장 정책
+## 6. 二쇱슂 ambiguity group蹂?臾몄옣 ?뺤콉
 
-`ambiguity_group` 컬럼은 §2의 closed-vocabulary enum이다 (`reports/step4r/4rb_attention/step4r_bigru_attention_schema_outputs_calibrated.csv` 참조).
+`ambiguity_group` 而щ읆? 짠2??closed-vocabulary enum?대떎 (`reports/step4r/4rb_attention/step4r_bigru_attention_schema_outputs_calibrated.csv` 李몄“).
 
 ### 6.1 `confident_C2`
 
-- 깊이 부족 계열 표현 가능.
-- **절대값으로서의 squat depth를 측정한 것처럼 말하지 않는다.** "깊이 부족" 자체도 *직접 측정*이 아니라 *계열 패턴*으로 표현 (§2 vocabulary).
+- 源딆씠 遺議?怨꾩뿴 ?쒗쁽 媛??
+- **?덈?媛믪쑝濡쒖꽌??squat depth瑜?痢≪젙??寃껋쿂??留먰븯吏 ?딅뒗??** "源딆씠 遺議? ?먯껜??*吏곸젒 痢≪젙*???꾨땲??*怨꾩뿴 ?⑦꽩*?쇰줈 ?쒗쁽 (짠2 vocabulary).
 
 ### 6.2 `within_group_c1_c5_c6`
 
-- 정상 패턴(C1)과 좌우 무릎 관련 패턴(C5/C6)의 *경계*로 표현.
-- **"knee valgus를 관찰했다", "한쪽 무릎이 안쪽으로 들어갔다" 등은 금지** (forbidden list, §3 of `step5_v2_forbidden_expressions.md`).
-- 허용: "손목 센서 기준으로 정상 패턴과 좌우 비대칭 관련 패턴이 함께 나타나는 경계 신호".
+- ?뺤긽 ?⑦꽩(C1)怨?醫뚯슦 臾대쫷 愿???⑦꽩(C5/C6)??*寃쎄퀎*濡??쒗쁽.
+- **"knee valgus瑜?愿李고뻽??, "?쒖そ 臾대쫷???덉そ?쇰줈 ?ㅼ뼱媛붾떎" ?깆? 湲덉?** (forbidden list, 짠3 of `step5_v2_forbidden_expressions.md`).
+- ?덉슜: "?먮ぉ ?쇱꽌 湲곗??쇰줈 ?뺤긽 ?⑦꽩怨?醫뚯슦 鍮꾨?移?愿???⑦꽩???④퍡 ?섑??섎뒗 寃쎄퀎 ?좏샇".
 
 ### 6.3 `pair_c3_c4`
 
-- C3/C4 *경계 패턴*으로 표현.
-- 특정 복합 오류 단정 금지 (예: "C3로 진단된다" 금지).
-- 허용: "복합 오류 후보 두 가지가 함께 나타나는 경계 신호".
+- C3/C4 *寃쎄퀎 ?⑦꽩*?쇰줈 ?쒗쁽.
+- ?뱀젙 蹂듯빀 ?ㅻ쪟 ?⑥젙 湲덉? (?? "C3濡?吏꾨떒?쒕떎" 湲덉?).
+- ?덉슜: "蹂듯빀 ?ㅻ쪟 ?꾨낫 ??媛吏媛 ?④퍡 ?섑??섎뒗 寃쎄퀎 ?좏샇".
 
 ### 6.4 `pair_plus_c2_absorption`
 
-- C3/C4 후보와 *C2 흡수 가능성*을 함께 표현.
-- 허용: "깊이 부족 계열 신호와 복합 오류 후보가 함께 나타남".
-- C2를 흡수 가능성으로 *명시*해야 한다 (Step 3 §4의 필수 hedge — `pair_plus_c2_absorption` flag가 강제하는 표현).
+- C3/C4 ?꾨낫? *C2 ?≪닔 媛?μ꽦*???④퍡 ?쒗쁽.
+- ?덉슜: "源딆씠 遺議?怨꾩뿴 ?좏샇? 蹂듯빀 ?ㅻ쪟 ?꾨낫媛 ?④퍡 ?섑???.
+- C2瑜??≪닔 媛?μ꽦?쇰줈 *紐낆떆*?댁빞 ?쒕떎 (Step 3 짠4???꾩닔 hedge ??`pair_plus_c2_absorption` flag媛 媛뺤젣?섎뒗 ?쒗쁽).
 
-### 6.4.1 C3 원 논문 정의와 caption-safe 축약 (§6.3 / §6.4 공통)
+### 6.4.1 C3 ???쇰Ц ?뺤쓽? caption-safe 異뺤빟 (짠6.3 / 짠6.4 怨듯넻)
 
-- C3는 원 논문에서 **"insufficient depth with posterior tilting and knee valgus"** 로 정의되지만, caption에서는 *posterior tilting* 과 *knee valgus* 를 직접 측정한 것처럼 쓰지 **않는다**. wrist IMU는 골반 경사도, 무릎 정렬을 직접 측정하지 않기 때문이다 (`reports/step4_research_reframing.md` §4.2 관측 가능성 한계).
-- 따라서 C3 / C4 관련 모든 ambiguity 표현은 **"복합 오류 후보"** 또는 **"깊이 부족 계열 신호와 복합 오류 후보가 함께 나타남"** 으로만 표현한다 (구체 어휘는 `step5_v2_caption_vocabulary.md` §1.2 / §3.1 참조).
-- "골반 후방 경사", "posterior tilting", "knee valgus", "무릎이 안쪽으로 들어감" 등은 모두 사용자 caption에서 금지된다 (`step5_v2_forbidden_expressions.md` §1).
-- 이는 sensor-grounded caption policy의 *의도적 축약*이며, 본 시스템이 의학·생체역학적 단정의 위험을 구조적으로 회피하기 위한 설계이다 (정책 §8 / reframing §8.1).
+- C3?????쇰Ц?먯꽌 **"insufficient depth with posterior tilting and knee valgus"** 濡??뺤쓽?섏?留? caption?먯꽌??*posterior tilting* 怨?*knee valgus* 瑜?吏곸젒 痢≪젙??寃껋쿂???곗? **?딅뒗??*. wrist IMU??怨⑤컲 寃쎌궗?? 臾대쫷 ?뺣젹??吏곸젒 痢≪젙?섏? ?딄린 ?뚮Ц?대떎 (`reports/step4r/step4_research_reframing.md` 짠4.2 愿痢?媛?μ꽦 ?쒓퀎).
+- ?곕씪??C3 / C4 愿??紐⑤뱺 ambiguity ?쒗쁽? **"蹂듯빀 ?ㅻ쪟 ?꾨낫"** ?먮뒗 **"源딆씠 遺議?怨꾩뿴 ?좏샇? 蹂듯빀 ?ㅻ쪟 ?꾨낫媛 ?④퍡 ?섑???** ?쇰줈留??쒗쁽?쒕떎 (援ъ껜 ?댄쐶??`step5_v2_caption_vocabulary.md` 짠1.2 / 짠3.1 李몄“).
+- "怨⑤컲 ?꾨갑 寃쎌궗", "posterior tilting", "knee valgus", "臾대쫷???덉そ?쇰줈 ?ㅼ뼱媛? ?깆? 紐⑤몢 ?ъ슜??caption?먯꽌 湲덉??쒕떎 (`step5_v2_forbidden_expressions.md` 짠1).
+- ?대뒗 sensor-grounded caption policy??*?섎룄??異뺤빟*?대ŉ, 蹂??쒖뒪?쒖씠 ?섑븰쨌?앹껜??븰???⑥젙???꾪뿕??援ъ“?곸쑝濡??뚰뵾?섍린 ?꾪븳 ?ㅺ퀎?대떎 (?뺤콉 짠8 / reframing 짠8.1).
 
-### 6.5 `low_confidence` (catch-all 4번째 rule)
+### 6.5 `low_confidence` (catch-all 4踰덉㎏ rule)
 
-- §4 어떤 분기도 통과하지 못해 `no_call=true`로 떨어진 경우.
-- §4.4의 `no_call` 문장으로 처리.
-- 사유는 `low_confidence_no_class_set`로 짧게 표시.
+- 짠4 ?대뼡 遺꾧린???듦낵?섏? 紐삵빐 `no_call=true`濡??⑥뼱吏?寃쎌슦.
+- 짠4.4??`no_call` 臾몄옣?쇰줈 泥섎━.
+- ?ъ쑀??`low_confidence_no_class_set`濡?吏㏐쾶 ?쒖떆.
 
-### 6.6 `anchor_unreliable` (위의 어떤 group에도 동반될 수 있는 flag)
+### 6.6 `anchor_unreliable` (?꾩쓽 ?대뼡 group?먮룄 ?숇컲?????덈뒗 flag)
 
-- "동작 기준점이 불안정하여 설명 신뢰도가 낮습니다"로 표현 가능.
-- **자세 오류 원인으로 단정하지 않는다** — anchor unreliable은 *센서 신호의 특성*이지 사용자의 자세가 잘못됐다는 신호가 아니다.
-- `caption_confidence_level`이 이미 `hedged → low` 또는 `confident → hedged`로 강등된 상태에서 동반되므로, 어조는 강등된 level을 따른다.
+- "?숈옉 湲곗??먯씠 遺덉븞?뺥븯???ㅻ챸 ?좊ː?꾧? ??뒿?덈떎"濡??쒗쁽 媛??
+- **?먯꽭 ?ㅻ쪟 ?먯씤?쇰줈 ?⑥젙?섏? ?딅뒗??* ??anchor unreliable? *?쇱꽌 ?좏샇???뱀꽦*?댁? ?ъ슜?먯쓽 ?먯꽭媛 ?섎せ?먮떎???좏샇媛 ?꾨땲??
+- `caption_confidence_level`???대? `hedged ??low` ?먮뒗 `confident ??hedged`濡?媛뺣벑???곹깭?먯꽌 ?숇컲?섎?濡? ?댁“??媛뺣벑??level???곕Ⅸ??
 
 ---
 
-## 7. posture 표현 정책
+## 7. posture ?쒗쁽 ?뺤콉
 
-| `posture_canonical` | 사용자 표현 |
+| `posture_canonical` | ?ъ슜???쒗쁽 |
 |---|---|
-| `SA` | 팔을 앞으로 둔 자세 |
-| `CA` | 팔을 교차한 자세 |
-| `HW` | 손을 허리에 둔 자세 |
+| `SA` | ?붿쓣 ?욎쑝濡????먯꽭 |
+| `CA` | ?붿쓣 援먯감???먯꽭 |
+| `HW` | ?먯쓣 ?덈━?????먯꽭 |
 
-- posture는 *센서 신호 해석 조건*으로 표현한다 ("팔을 앞으로 둔 자세에서 기록된 손목 IMU 신호는 …").
-- **자세 자체를 squat 오류로 말하지 않는다** — 본 데이터의 posture는 측정 프로토콜의 일부이지 사용자가 잘못된 자세를 *취한* 것이 아니다.
-- HW에서 anchor 신뢰도가 구조적으로 낮은 경향(`reports/step2/step25_final_synthesis.md` §4)을 caption에서 직접 인용하지 않는다 — 이 정보는 schema 단계에서 이미 `anchor_unreliable` flag로 흡수되었고, caption은 그 flag만 본다.
+- posture??*?쇱꽌 ?좏샇 ?댁꽍 議곌굔*?쇰줈 ?쒗쁽?쒕떎 ("?붿쓣 ?욎쑝濡????먯꽭?먯꽌 湲곕줉???먮ぉ IMU ?좏샇????).
+- **?먯꽭 ?먯껜瑜?squat ?ㅻ쪟濡?留먰븯吏 ?딅뒗??* ??蹂??곗씠?곗쓽 posture??痢≪젙 ?꾨줈?좎퐳???쇰??댁? ?ъ슜?먭? ?섎せ???먯꽭瑜?*痍⑦븳* 寃껋씠 ?꾨땲??
+- HW?먯꽌 anchor ?좊ː?꾧? 援ъ“?곸쑝濡???? 寃쏀뼢(`reports/step2/step25_final_synthesis.md` 짠4)??caption?먯꽌 吏곸젒 ?몄슜?섏? ?딅뒗???????뺣낫??schema ?④퀎?먯꽌 ?대? `anchor_unreliable` flag濡??≪닔?섏뿀怨? caption? 洹?flag留?蹂몃떎.
 
 ---
 
-## 8. 금지 원칙
+## 8. 湲덉? ?먯튃
 
-1. **측정하지 않은 생체역학 변수를 직접 측정한 것처럼 말하지 않는다.** wrist IMU는 다음을 직접 측정하지 않는다 — knee valgus, hip-knee-ankle 정렬, 골반 경사, 절대 squat depth, 관절각, 좌/우 비대칭의 방향.
-2. **의학적 진단·부상 위험·치료 권고를 하지 않는다.** caption은 의료 도구가 아니다.
-3. **attention 분석 결과를 사용자 caption에 직접 근거로 쓰지 않는다.** "모델의 attention이 ascending phase에 집중되어 …" 류 표현은 일반 사용자 caption에서 invalid이다 (§3.3 technical variant 한정 허용).
-4. **schema에 없는 정보를 추가하지 않는다.** LLM은 새 클래스, 새 ambiguity flag, 새 confidence level, 새 quantitative claim을 *발명하지 않는다*.
-5. **class_set을 좁히지 않는다.** schema가 size 2~3을 출력했으면 caption도 모두 후보로 표현해야 한다 (§5).
+1. **痢≪젙?섏? ?딆? ?앹껜??븰 蹂?섎? 吏곸젒 痢≪젙??寃껋쿂??留먰븯吏 ?딅뒗??** wrist IMU???ㅼ쓬??吏곸젒 痢≪젙?섏? ?딅뒗????knee valgus, hip-knee-ankle ?뺣젹, 怨⑤컲 寃쎌궗, ?덈? squat depth, 愿?덇컖, 醫???鍮꾨?移?쓽 諛⑺뼢.
+2. **?섑븰??吏꾨떒쨌遺???꾪뿕쨌移섎즺 沅뚭퀬瑜??섏? ?딅뒗??** caption? ?섎즺 ?꾧뎄媛 ?꾨땲??
+3. **attention 遺꾩꽍 寃곌낵瑜??ъ슜??caption??吏곸젒 洹쇨굅濡??곗? ?딅뒗??** "紐⑤뜽??attention??ascending phase??吏묒쨷?섏뼱 ?? 瑜??쒗쁽? ?쇰컲 ?ъ슜??caption?먯꽌 invalid?대떎 (짠3.3 technical variant ?쒖젙 ?덉슜).
+4. **schema???녿뒗 ?뺣낫瑜?異붽??섏? ?딅뒗??** LLM? ???대옒?? ??ambiguity flag, ??confidence level, ??quantitative claim??*諛쒕챸?섏? ?딅뒗??.
+5. **class_set??醫곹엳吏 ?딅뒗??** schema媛 size 2~3??異쒕젰?덉쑝硫?caption??紐⑤몢 ?꾨낫濡??쒗쁽?댁빞 ?쒕떎 (짠5).
 
 ---
 
 ## 9. caption output format
 
-caption layer는 rep마다 다음 4개 표면 텍스트 필드를 산출한다.
+caption layer??rep留덈떎 ?ㅼ쓬 4媛??쒕㈃ ?띿뒪???꾨뱶瑜??곗텧?쒕떎.
 
-| 필드 | 의미 |
+| ?꾨뱶 | ?섎? |
 |---|---|
-| `caption_ko` | 한국어 본문. §4 ~ §6의 정책 위에서 작성된 1 ~ 3문장. |
-| `confidence_phrase` | `caption_confidence_level`을 표현하는 짧은 어구 (§2 vocabulary `confidence_*`). |
-| `uncertainty_phrase` | `uncertainty_flags` / `ambiguity_group`을 표현하는 짧은 어구 (§2 vocabulary `ambiguity_*`). |
-| `limitation_phrase` | "손목 센서 기준의 추정" 류의 sensor-grounded notice. 길이 부담을 줄이기 위해 caption에 항상 포함되지 않을 수 있음. |
+| `caption_ko` | ?쒓뎅??蹂몃Ц. 짠4 ~ 짠6???뺤콉 ?꾩뿉???묒꽦??1 ~ 3臾몄옣. |
+| `confidence_phrase` | `caption_confidence_level`???쒗쁽?섎뒗 吏㏃? ?닿뎄 (짠2 vocabulary `confidence_*`). |
+| `uncertainty_phrase` | `uncertainty_flags` / `ambiguity_group`???쒗쁽?섎뒗 吏㏃? ?닿뎄 (짠2 vocabulary `ambiguity_*`). |
+| `limitation_phrase` | "?먮ぉ ?쇱꽌 湲곗???異붿젙" 瑜섏쓽 sensor-grounded notice. 湲몄씠 遺?댁쓣 以꾩씠湲??꾪빐 caption????긽 ?ы븿?섏? ?딆쓣 ???덉쓬. |
 
-추가 trace 필드 (validation 용도, 사용자에게 안 보임):
+異붽? trace ?꾨뱶 (validation ?⑸룄, ?ъ슜?먯뿉寃???蹂댁엫):
 
-| 필드 | 의미 |
+| ?꾨뱶 | ?섎? |
 |---|---|
-| `used_schema_fields` | 이 caption이 *입력 schema 어떤 필드를 참조했는지* 자체 보고. automatic validation의 누락 점검에 사용. |
+| `used_schema_fields` | ??caption??*?낅젰 schema ?대뼡 ?꾨뱶瑜?李몄“?덈뒗吏* ?먯껜 蹂닿퀬. automatic validation???꾨씫 ?먭????ъ슜. |
 
 ---
 
-## 10. Step 6_v2 / Step 7_v2로 넘기는 결정 사항
+## 10. Step 6_v2 / Step 7_v2濡??섍린??寃곗젙 ?ы빆
 
-본 정책 문서는 다음을 후속 단계로 *명시 위임*한다 (본 단계에서 결정하지 않음).
+蹂??뺤콉 臾몄꽌???ㅼ쓬???꾩냽 ?④퀎濡?*紐낆떆 ?꾩엫*?쒕떎 (蹂??④퀎?먯꽌 寃곗젙?섏? ?딆쓬).
 
 - **Step 6_v2 (prompt finalization)**:
-  - prompt에서 사용할 schema field 목록 확정 (§2의 부분집합).
-  - class별 vocabulary의 최종 wording (`step5_v2_caption_vocabulary.md`의 후보 어휘에서 선택).
-  - forbidden expression 목록의 최종 commit (`step5_v2_forbidden_expressions.md` 기반).
-  - automatic validation으로 검사할 항목 commit (forbidden token / forbidden semantic / confidence-level mismatch / no_call contradiction / class_set narrowing / unsupported biomechanical claim).
+  - prompt?먯꽌 ?ъ슜??schema field 紐⑸줉 ?뺤젙 (짠2??遺遺꾩쭛??.
+  - class蹂?vocabulary??理쒖쥌 wording (`step5_v2_caption_vocabulary.md`???꾨낫 ?댄쐶?먯꽌 ?좏깮).
+  - forbidden expression 紐⑸줉??理쒖쥌 commit (`step5_v2_forbidden_expressions.md` 湲곕컲).
+  - automatic validation?쇰줈 寃?ы븷 ??ぉ commit (forbidden token / forbidden semantic / confidence-level mismatch / no_call contradiction / class_set narrowing / unsupported biomechanical claim).
 - **Step 7_v2 (caption generation prototype)**:
-  - LLM 호출 코드 작성.
-  - 본 정책 위반 시 retry / fallback policy.
-  - per-rep caption batch 산출.
+  - LLM ?몄텧 肄붾뱶 ?묒꽦.
+  - 蹂??뺤콉 ?꾨컲 ??retry / fallback policy.
+  - per-rep caption batch ?곗텧.
 
-본 문서가 commit되지 않은 채 Step 6_v2 / 7_v2가 시작되어서는 안 된다.
-
----
-
-## 11. 본 단계가 명시적으로 결정하지 않는 사항
-
-- caption 한 문장당 길이 상한 / 하한.
-- LLM 모델 선택 (어느 한국어 LM을 쓸지).
-- caption_ko 안에서 confidence_phrase / uncertainty_phrase / limitation_phrase의 *순서*.
-- automatic validation의 LLM judge 사용 여부 (Step 8_v2에서 결정).
-- human review의 부속 사용성 검토 일정 (main evaluation에서 제외 — `reports/step4_research_reframing.md` §7).
+蹂?臾몄꽌媛 commit?섏? ?딆? 梨?Step 6_v2 / 7_v2媛 ?쒖옉?섏뼱?쒕뒗 ???쒕떎.
 
 ---
 
-*본 정책 문서는 caption을 만들지 않으며, 어떤 LLM도 호출하지 않으며, 코드도 작성하지 않는다. 기존 Step 5 ~ 8 산출물(`reports/step5/` ~ `reports/step8/`)은 수정하지 않으며, 본 문서는 `reports/step5_v2/` 아래에만 새로 생성된다.*
+## 11. 蹂??④퀎媛 紐낆떆?곸쑝濡?寃곗젙?섏? ?딅뒗 ?ы빆
+
+- caption ??臾몄옣??湲몄씠 ?곹븳 / ?섑븳.
+- LLM 紐⑤뜽 ?좏깮 (?대뒓 ?쒓뎅??LM???몄?).
+- caption_ko ?덉뿉??confidence_phrase / uncertainty_phrase / limitation_phrase??*?쒖꽌*.
+- automatic validation??LLM judge ?ъ슜 ?щ? (Step 8_v2?먯꽌 寃곗젙).
+- human review??遺???ъ슜??寃???쇱젙 (main evaluation?먯꽌 ?쒖쇅 ??`reports/step4r/step4_research_reframing.md` 짠7).
+
+---
+
+*蹂??뺤콉 臾몄꽌??caption??留뚮뱾吏 ?딆쑝硫? ?대뼡 LLM???몄텧?섏? ?딆쑝硫? 肄붾뱶???묒꽦?섏? ?딅뒗?? 湲곗〈 Step 5 ~ 8 ?곗텧臾?`reports/step5/` ~ `reports/step8/`)? ?섏젙?섏? ?딆쑝硫? 蹂?臾몄꽌??`reports/step5_v2/` ?꾨옒?먮쭔 ?덈줈 ?앹꽦?쒕떎.*

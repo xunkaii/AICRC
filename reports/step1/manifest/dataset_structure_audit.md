@@ -10,19 +10,19 @@
 아래 결정사항은 **고정**되며, 이후 모든 단계(manifest 생성, 학습 split,
 captioning, 평가)는 이 범위를 따른다.
 
-| 항목 | 값 | 근거 (한 줄 요약) |
-|---|---|---|
-| 사용 클래스          | **C1, C2, C3, C4, C5, C6** | 논문 Table 1이 정확히 이 여섯 클래스만 정의함. C7은 **제외**. |
-| 사용 데이터 타입      | **Segmented 만**           | sensor-to-text는 rep 단위 학습이 필요. Combined는 **제외**. |
-| Posture 코드 (canonical) | **SA / CA / HW**       | 논문 Table 2 / Figure 3 약어. 레거시 `AS / AC / AW`는 metadata 별칭으로만 보존. |
+| 항목                     | 값                          | 근거 (한 줄 요약)                                                      |
+| ---------------------- | -------------------------- | ---------------------------------------------------------------- |
+| 사용 클래스                 | **C1, C2, C3, C4, C5, C6** | 논문 Table 1이 정확히 이 여섯 클래스만 정의함. C7은 **제외**.                       |
+| 사용 데이터 타입              | **Segmented 만**            | sensor-to-text는 rep 단위 학습이 필요. Combined는 **제외**.                 |
+| Posture 코드 (canonical) | **SA / CA / HW**           | 논문 Table 2 / Figure 3 약어. 레거시 `AS / AC / AW`는 metadata 별칭으로만 보존. |
 
 이후 모든 코드/문서에서 사용할 canonical posture 매핑:
 
-| 디스크 폴더명          | Canonical (SA/CA/HW) | Legacy (AS/AC/AW) | Figure 3 |
-|---|---|---|---|
-| `01_Straight_Arms` | **SA** | AS | Figure 3 (a) straight arms |
-| `02_Crossed_Arms` | **CA** | AC | Figure 3 (b) crossed arms |
-| `03_Hands_on_Waist` | **HW** | AW | Figure 3 (c) hands on waist |
+| 디스크 폴더명             | Canonical (SA/CA/HW) | Legacy (AS/AC/AW) | Figure 3                    |
+| ------------------- | -------------------- | ----------------- | --------------------------- |
+| `01_Straight_Arms`  | **SA**               | AS                | Figure 3 (a) straight arms  |
+| `02_Crossed_Arms`   | **CA**               | AC                | Figure 3 (b) crossed arms   |
+| `03_Hands_on_Waist` | **HW**               | AW                | Figure 3 (c) hands on waist |
 
 Step 1 scope 규모:
 
@@ -150,21 +150,21 @@ scale        : 약 935개 subject 서브폴더, 약 9,200개 rep-level 샘플
 
 manifest의 한 행 = Step 1 scope 내의 rep 파일 1개.
 
-| 컬럼 | 출처 / 규칙 |
-|---|---|
-| `rep_id`             | `f"{participant_id}_{class_id}_{posture_canonical}_rep{rep_index:02d}"` |
-| `participant_id`     | 서브폴더명에서 파싱 (`EP01..EP52`) |
-| `class_id`           | 경로에서 추출 (`C1..C6` — C7은 절대 등장 금지) |
-| `class_description`  | `CLASS_DESCRIPTIONS[class_id]` |
-| `posture_canonical`  | **SA / CA / HW** (posture의 primary key) |
-| `posture_legacy`     | AS / AC / AW (별칭 전용) |
-| `posture_folder`     | `01_Straight_Arms` / `02_Crossed_Arms` / `03_Hands_on_Waist` |
-| `rep_index`          | `file_..._{rep}_o0.txt`의 정수 (1-based) |
-| `signal_path`        | rep `.txt` 파일의 절대 경로 |
-| `n_rows`             | rep 파일 행 수 (sequence length) |
-| `start_idx` / `end_idx` | 부모 서브폴더의 `_vkeep_st_end.txt`에서 |
-| `t_start_s` / `t_end_s` | 부모 서브폴더의 `_time.txt`에서 |
-| `split`              | participant 단위 split (예: 36 / 8 / 8 train/val/test) |
+| 컬럼                      | 출처 / 규칙                                                                 |
+| ----------------------- | ----------------------------------------------------------------------- |
+| `rep_id`                | `f"{participant_id}_{class_id}_{posture_canonical}_rep{rep_index:02d}"` |
+| `participant_id`        | 서브폴더명에서 파싱 (`EP01..EP52`)                                               |
+| `class_id`              | 경로에서 추출 (`C1..C6` — C7은 절대 등장 금지)                                       |
+| `class_description`     | `CLASS_DESCRIPTIONS[class_id]`                                          |
+| `posture_canonical`     | **SA / CA / HW** (posture의 primary key)                                 |
+| `posture_legacy`        | AS / AC / AW (별칭 전용)                                                    |
+| `posture_folder`        | `01_Straight_Arms` / `02_Crossed_Arms` / `03_Hands_on_Waist`            |
+| `rep_index`             | `file_..._{rep}_o0.txt`의 정수 (1-based)                                   |
+| `signal_path`           | rep `.txt` 파일의 절대 경로                                                    |
+| `n_rows`                | rep 파일 행 수 (sequence length)                                            |
+| `start_idx` / `end_idx` | 부모 서브폴더의 `_vkeep_st_end.txt`에서                                          |
+| `t_start_s` / `t_end_s` | 부모 서브폴더의 `_time.txt`에서                                                  |
+| `split`                 | participant 단위 split (예: 36 / 8 / 8 train/val/test)                     |
 
 필터링 규칙:
 1. 행 수가 최소 임계값(예: 50 행) 미만인 rep 파일은 truncation으로 간주하여 drop.
