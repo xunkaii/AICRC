@@ -1,10 +1,10 @@
-# Step 2.5 — Preflight Sanity Summary
+# Step 2.5 — 프리플라이트 정합성 요약
 
 - Manifest: `data\manifest_split.csv`
-- Loaded sample rows: **9275**
-- Bottom-audit records produced: **9275**
+- 로드된 샘플 행 수: **9275**
+- 생성된 bottom-audit 레코드 수: **9275**
 
-## 1. Split sizes
+## 1. 분할 크기
 
 | split | participants | samples |
 |---|---|---|
@@ -12,7 +12,7 @@
 | val | 8 | 1436 |
 | test | 8 | 1427 |
 
-## 2. Class × posture × split sample counts
+## 2. 클래스 × 자세 × 분할별 샘플 수
 
 | class | posture | train | val | test | total |
 |---|---|---|---|---|---|
@@ -35,18 +35,18 @@
 | C6 | CA | 353 | 79 | 80 | 512 |
 | C6 | HW | 359 | 80 | 80 | 519 |
 
-## 3. n_rows / duration_s basic stats
+## 3. n_rows / duration_s 기본 통계
 
-| field | n | min | p25 | p50 | mean | p75 | max |
-|---|---|---|---|---|---|---|---|
-| n_rows | 9275 | 107 | 144 | 148 | 147 | 151 | 200 |
+| 필드       | n    | min   | p25   | p50   | mean  | p75   | max   |
+| ---------- | ---- | ----- | ----- | ----- | ----- | ----- | ----- |
+| n_rows     | 9275 | 107   | 144   | 148   | 147   | 151   | 200   |
 | duration_s | 9275 | 2.090 | 2.872 | 2.941 | 2.931 | 3.003 | 3.943 |
 
-## 4. Soft-flag counts
+## 4. Soft-flag 카운트
 
 - `boundary_ok=False`: 9
 - `length_ok=False`  : 0
 
-These rows are kept in the manifest (soft flags only). Step 2.5
-audits operate on the resampled signal, so missing index bounds do
-not block bottom-event detection.
+해당 행들은 매니페스트에 유지된다 (soft flag만 적용). Step 2.5
+감사는 리샘플링된 신호를 대상으로 작동하므로, 누락된 인덱스 경계가
+bottom 이벤트 검출을 막지 않는다.
