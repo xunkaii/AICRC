@@ -36,15 +36,15 @@ Step 1 scope 규모:
 
 ## 1. 논문 Table 1 / Figure 3 vs 실제 폴더
 
-| 폴더 | 논문 Table 1 대응 | 설명 (논문) | Step 1 scope 포함? |
-|---|---|---|---|
-| `C1` | C1 | 정상 스쿼트 | **예 (포함)** |
-| `C2` | C2 | Insufficient depth (불충분한 하강) | **예 (포함)** |
-| `C3` | C3 | Insufficient depth + posterior tilting + knee valgus | **예 (포함)** |
-| `C4` | C4 | Left-knee valgus (왼쪽 무릎 안쪽 collapse) | **예 (포함)** |
-| `C5` | C5 | Right-knee valgus (오른쪽 무릎 안쪽 collapse) | **예 (포함)** |
-| `C6` | C6 | Both-knee valgus (양쪽 무릎 안쪽 collapse) | **예 (포함)** |
-| `C7` | 논문에 없음 | 논문 Table 1에 정의되지 않음 (Step 1 제외) | 아니오 (scope 외) |
+| 폴더   | 논문 Table 1 대응 | 설명 (논문)                                              | Step 1 scope 포함? |
+| ---- | ------------- | ---------------------------------------------------- | ---------------- |
+| `C1` | C1            | 정상 스쿼트                                               | **예 (포함)**       |
+| `C2` | C2            | Insufficient depth (불충분한 하강)                         | **예 (포함)**       |
+| `C3` | C3            | Insufficient depth + posterior tilting + knee valgus | **예 (포함)**       |
+| `C4` | C4            | Left-knee valgus (왼쪽 무릎 안쪽 collapse)                 | **예 (포함)**       |
+| `C5` | C5            | Right-knee valgus (오른쪽 무릎 안쪽 collapse)               | **예 (포함)**       |
+| `C6` | C6            | Both-knee valgus (양쪽 무릎 안쪽 collapse)                 | **예 (포함)**       |
+| `C7` | 논문에 없음        | 논문 Table 1에 정의되지 않음 (Step 1 제외)                      | 아니오 (scope 외)    |
 
 ## 2. C1–C7 인벤토리 (디스크 실측)
 

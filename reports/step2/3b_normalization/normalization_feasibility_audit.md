@@ -41,11 +41,11 @@
 
 통계 적합 (투명성을 위해):
 
-| stat | scope | source split | 신규 사용자 첫 rep에 사용 가능? |
-|---|---|---|---|
-| 자세별 평균 / 표준편차 | 자세별 | train만 | yes |
-| 자세별 중앙값 / IQR | 자세별 | train만 | yes |
-| 피험자별 평균 / 표준편차 | 피험자별 | 전체 분할 | **no** (사전 캘리브레이션 필요) |
+| stat           | scope | source split | 신규 사용자 첫 rep에 사용 가능?  |
+| -------------- | ----- | ------------ | --------------------- |
+| 자세별 평균 / 표준편차  | 자세별   | train만       | yes                   |
+| 자세별 중앙값 / IQR  | 자세별   | train만       | yes                   |
+| 피험자별 평균 / 표준편차 | 피험자별  | 전체 분할        | **no** (사전 캘리브레이션 필요) |
 
 ## 4. 클래스 효과 vs 자세 효과 (η²)
 
@@ -53,20 +53,20 @@
 감소**해야 한다. 자세 인식 정규화는 자세 η²를 0에 가깝게 만들 것으로
 예상된다.
 
-| feature | method | n | class η² | posture η² | class η² / raw | posture η² / raw |
-|---|---|---|---|---|---|---|
-| `motion_range_acc_z` | `raw` | 9275 | 0.1112 | 0.0607 | 1.000 | 1.000 |
-| `motion_range_acc_z` | `posture_train_zscore` | 9275 | 0.1171 | 0.0003 | 1.053 | 0.005 |
-| `motion_range_acc_z` | `posture_train_robust` | 9275 | 0.1165 | 0.0013 | 1.047 | 0.022 |
-| `motion_range_acc_z` | `participant_zscore_upper_bound` | 9275 | 0.1574 | 0.0721 | 1.415 | 1.188 |
-| `depth_proxy` | `raw` | 9275 | 0.0042 | 0.8623 | 1.000 | 1.000 |
-| `depth_proxy` | `posture_train_zscore` | 9275 | 0.0307 | 0.0019 | 7.270 | 0.002 |
-| `depth_proxy` | `posture_train_robust` | 9275 | 0.0303 | 0.0040 | 7.156 | 0.005 |
-| `depth_proxy` | `participant_zscore_upper_bound` | 9275 | 0.0052 | 0.9130 | 1.239 | 1.059 |
-| `bottom_recovery_slope_acc_z` | `raw` | 9275 | 0.0056 | 0.0924 | 1.000 | 1.000 |
-| `bottom_recovery_slope_acc_z` | `posture_train_zscore` | 9275 | 0.0059 | 0.0002 | 1.058 | 0.002 |
-| `bottom_recovery_slope_acc_z` | `posture_train_robust` | 9275 | 0.0058 | 0.0065 | 1.045 | 0.071 |
-| `bottom_recovery_slope_acc_z` | `participant_zscore_upper_bound` | 9275 | 0.0058 | 0.0997 | 1.038 | 1.079 |
+| feature                       | method                           | n    | class η² | posture η² | class η² / raw | posture η² / raw |
+| ----------------------------- | -------------------------------- | ---- | -------- | ---------- | -------------- | ---------------- |
+| `motion_range_acc_z`          | `raw`                            | 9275 | 0.1112   | 0.0607     | 1.000          | 1.000            |
+| `motion_range_acc_z`          | `posture_train_zscore`           | 9275 | 0.1171   | 0.0003     | 1.053          | 0.005            |
+| `motion_range_acc_z`          | `posture_train_robust`           | 9275 | 0.1165   | 0.0013     | 1.047          | 0.022            |
+| `motion_range_acc_z`          | `participant_zscore_upper_bound` | 9275 | 0.1574   | 0.0721     | 1.415          | 1.188            |
+| `depth_proxy`                 | `raw`                            | 9275 | 0.0042   | 0.8623     | 1.000          | 1.000            |
+| `depth_proxy`                 | `posture_train_zscore`           | 9275 | 0.0307   | 0.0019     | 7.270          | 0.002            |
+| `depth_proxy`                 | `posture_train_robust`           | 9275 | 0.0303   | 0.0040     | 7.156          | 0.005            |
+| `depth_proxy`                 | `participant_zscore_upper_bound` | 9275 | 0.0052   | 0.9130     | 1.239          | 1.059            |
+| `bottom_recovery_slope_acc_z` | `raw`                            | 9275 | 0.0056   | 0.0924     | 1.000          | 1.000            |
+| `bottom_recovery_slope_acc_z` | `posture_train_zscore`           | 9275 | 0.0059   | 0.0002     | 1.058          | 0.002            |
+| `bottom_recovery_slope_acc_z` | `posture_train_robust`           | 9275 | 0.0058   | 0.0065     | 1.045          | 0.071            |
+| `bottom_recovery_slope_acc_z` | `participant_zscore_upper_bound` | 9275 | 0.0058   | 0.0997     | 1.038          | 1.079            |
 
 읽기 가이드:
 
@@ -79,20 +79,20 @@
 - `raw`의 경우: 분할 평균의 (max − min) > |overall mean|의 20%이면 플래그.
 - 정규화 방법의 경우: 분할 평균의 절대 (max − min) > 0.20 (z-score 단위)이면 플래그.
 
-| feature | method | rule | unstable? |
-|---|---|---|---|
-| `motion_range_acc_z` | `raw` | raw_relative_>0.20 | False |
-| `motion_range_acc_z` | `posture_train_zscore` | normalized_absolute_>0.20 | False |
-| `motion_range_acc_z` | `posture_train_robust` | normalized_absolute_>0.20 | False |
-| `motion_range_acc_z` | `participant_zscore_upper_bound` | normalized_absolute_>0.20 | False |
-| `depth_proxy` | `raw` | raw_relative_>0.20 | False |
-| `depth_proxy` | `posture_train_zscore` | normalized_absolute_>0.20 | **True** |
-| `depth_proxy` | `posture_train_robust` | normalized_absolute_>0.20 | **True** |
-| `depth_proxy` | `participant_zscore_upper_bound` | normalized_absolute_>0.20 | False |
-| `bottom_recovery_slope_acc_z` | `raw` | raw_relative_>0.20 | **True** |
-| `bottom_recovery_slope_acc_z` | `posture_train_zscore` | normalized_absolute_>0.20 | False |
-| `bottom_recovery_slope_acc_z` | `posture_train_robust` | normalized_absolute_>0.20 | **True** |
-| `bottom_recovery_slope_acc_z` | `participant_zscore_upper_bound` | normalized_absolute_>0.20 | False |
+| feature                       | method                           | rule                      | unstable? |
+| ----------------------------- | -------------------------------- | ------------------------- | --------- |
+| `motion_range_acc_z`          | `raw`                            | raw_relative_>0.20        | False     |
+| `motion_range_acc_z`          | `posture_train_zscore`           | normalized_absolute_>0.20 | False     |
+| `motion_range_acc_z`          | `posture_train_robust`           | normalized_absolute_>0.20 | False     |
+| `motion_range_acc_z`          | `participant_zscore_upper_bound` | normalized_absolute_>0.20 | False     |
+| `depth_proxy`                 | `raw`                            | raw_relative_>0.20        | False     |
+| `depth_proxy`                 | `posture_train_zscore`           | normalized_absolute_>0.20 | **True**  |
+| `depth_proxy`                 | `posture_train_robust`           | normalized_absolute_>0.20 | **True**  |
+| `depth_proxy`                 | `participant_zscore_upper_bound` | normalized_absolute_>0.20 | False     |
+| `bottom_recovery_slope_acc_z` | `raw`                            | raw_relative_>0.20        | **True**  |
+| `bottom_recovery_slope_acc_z` | `posture_train_zscore`           | normalized_absolute_>0.20 | False     |
+| `bottom_recovery_slope_acc_z` | `posture_train_robust`           | normalized_absolute_>0.20 | **True**  |
+| `bottom_recovery_slope_acc_z` | `participant_zscore_upper_bound` | normalized_absolute_>0.20 | False     |
 
 전체 표: `reports/normalization_feasibility_split_robustness.csv`
 

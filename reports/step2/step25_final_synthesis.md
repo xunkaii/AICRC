@@ -30,19 +30,19 @@ v2 매니페스트 위에서, 스쿼트에 대한 센서-텍스트 출력을 설
 
 `reports/manifest_summary.md` 및 `reports/step25_preflight_summary.md`로부터:
 
-| 필드 | 값 |
-|---|---|
-| `manifest_raw` 행 수 | 9275 |
-| `manifest_clean` 행 수 | 9275 (hard drop = 0) |
-| `manifest_split` 행 수 | 9275 |
-| `boundary_ok = False` (soft flag) | 9 |
-| `length_ok = False` (soft flag) | 0 |
-| 참가자 | 52명 (`EP01`..`EP52`) |
-| 분할 (참가자) | train 36 / val 8 / test 8 |
-| 분할 (샘플) | train 6412 / val 1436 / test 1427 |
-| `split_seed` | 42 |
-| `split_version` | `v1_36_8_8` |
-| 분할 간 참가자 누수 | **0** (검증됨) |
+| 필드                                | 값                                 |
+| --------------------------------- | --------------------------------- |
+| `manifest_raw` 행 수                | 9275                              |
+| `manifest_clean` 행 수              | 9275 (hard drop = 0)              |
+| `manifest_split` 행 수              | 9275                              |
+| `boundary_ok = False` (soft flag) | 9                                 |
+| `length_ok = False` (soft flag)   | 0                                 |
+| 참가자                               | 52명 (`EP01`..`EP52`)              |
+| 분할 (참가자)                          | train 36 / val 8 / test 8         |
+| 분할 (샘플)                           | train 6412 / val 1436 / test 1427 |
+| `split_seed`                      | 42                                |
+| `split_version`                   | `v1_36_8_8`                       |
+| 분할 간 참가자 누수                       | **0** (검증됨)                       |
 
 `boundary_ok = False`인 9개 행은 모두 `_vkeep_st_end.txt` 파일이
 없는 단일 세그먼트(`EP10 / C1 / SA`)에서 발생한다. 해당 reps에는
@@ -117,11 +117,11 @@ Rep별로, `acc_bottom_idx`(acc_z 최솟값) 및 `gyro_bottom_idx`
 
 피처 뱅크에 잠정적으로(최종이 아님) 도입된 앵커 구조:
 
-| posture | 후보 앵커 | 근거 |
-|---|---|---|
-| SA | `ensemble_bottom_idx` (acc/gyro의 평균) | 높은 acc/gyro 일치도 |
-| CA | `ensemble_bottom_idx` | 높은 acc/gyro 일치도 |
-| HW | `acc_bottom_idx` (acc_z 최솟값만) | gyro 정점은 다른 이벤트를 측정 |
+| posture | 후보 앵커                                | 근거                  |
+| ------- | ------------------------------------ | ------------------- |
+| SA      | `ensemble_bottom_idx` (acc/gyro의 평균) | 높은 acc/gyro 일치도     |
+| CA      | `ensemble_bottom_idx`                | 높은 acc/gyro 일치도     |
+| HW      | `acc_bottom_idx` (acc_z 최솟값만)        | gyro 정점은 다른 이벤트를 측정 |
 
 **Step 3에 대한 의미.** 단일 전역 bottom 앵커는 고려 대상이 아니다.
 출력 설계는 앵커 정체성을 *자세 조건부*로 다루어야 하며, 앵커
@@ -233,11 +233,11 @@ features + posture one-hot)에서 적합되었다. 이 모델은 *참조*이지,
 
 테스트 분할 메트릭:
 
-| 설정 | accuracy | macro F1 | weighted F1 |
-|---|---|---|---|
-| `raw_core_features` | 0.2572 | 0.2274 | 0.2275 |
-| `posture_train_zscore_core_features` | 0.2628 | 0.2290 | 0.2291 |
-| `posture_train_robust_core_features` | 0.2635 | 0.2313 | 0.2314 |
+| 설정                                   | accuracy | macro F1 | weighted F1 |
+| ------------------------------------ | -------- | -------- | ----------- |
+| `raw_core_features`                  | 0.2572   | 0.2274   | 0.2275      |
+| `posture_train_zscore_core_features` | 0.2628   | 0.2290   | 0.2291      |
+| `posture_train_robust_core_features` | 0.2635   | 0.2313   | 0.2314      |
 
 (우연 = 1 / 6 ≈ 0.167.)
 

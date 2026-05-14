@@ -7,11 +7,11 @@
 
 ## 1. 비교된 설정
 
-| setting | 연속 피처 | 정규화 | 자세 입력 |
-|---|---|---|---|
-| `raw_core_features` | motion_range_acc_z, depth_proxy, bottom_recovery_slope_acc_z | 없음 | one-hot SA/CA/HW |
-| `posture_train_zscore_core_features` | 동일한 3개 피처 | 자세별 z-score (train 적합) | one-hot SA/CA/HW |
-| `posture_train_robust_core_features` | 동일한 3개 피처 | 자세별 median/IQR (train 적합) | one-hot SA/CA/HW |
+| setting                              | 연속 피처                                                        | 정규화                       | 자세 입력            |
+| ------------------------------------ | ------------------------------------------------------------ | ------------------------- | ---------------- |
+| `raw_core_features`                  | motion_range_acc_z, depth_proxy, bottom_recovery_slope_acc_z | 없음                        | one-hot SA/CA/HW |
+| `posture_train_zscore_core_features` | 동일한 3개 피처                                                    | 자세별 z-score (train 적합)    | one-hot SA/CA/HW |
+| `posture_train_robust_core_features` | 동일한 3개 피처                                                    | 자세별 median/IQR (train 적합) | one-hot SA/CA/HW |
 
 **participant z-score를 제외한 이유.** 신규 사용자로부터의 사전 reps
 (캘리브레이션)가 필요하며 첫 rep에서는 실행할 수 없으므로, 배포 가능한
@@ -42,14 +42,14 @@ sklearn의
 
 ## 3. 헤드라인 메트릭 (val / test)
 
-| setting | split | accuracy | macro F1 | weighted F1 |
-|---|---|---|---|---|
-| `raw_core_features` | val | 0.2354 | 0.2076 | 0.2079 |
-| `raw_core_features` | test | 0.2572 | 0.2274 | 0.2275 |
-| `posture_train_zscore_core_features` | val | 0.2416 | 0.2104 | 0.2107 |
-| `posture_train_zscore_core_features` | test | 0.2628 | 0.2290 | 0.2291 |
-| `posture_train_robust_core_features` | val | 0.2423 | 0.2117 | 0.2121 |
-| `posture_train_robust_core_features` | test | 0.2635 | 0.2313 | 0.2314 |
+| setting                              | split | accuracy | macro F1 | weighted F1 |
+| ------------------------------------ | ----- | -------- | -------- | ----------- |
+| `raw_core_features`                  | val   | 0.2354   | 0.2076   | 0.2079      |
+| `raw_core_features`                  | test  | 0.2572   | 0.2274   | 0.2275      |
+| `posture_train_zscore_core_features` | val   | 0.2416   | 0.2104   | 0.2107      |
+| `posture_train_zscore_core_features` | test  | 0.2628   | 0.2290   | 0.2291      |
+| `posture_train_robust_core_features` | val   | 0.2423   | 0.2117   | 0.2121      |
+| `posture_train_robust_core_features` | test  | 0.2635   | 0.2313   | 0.2314      |
 
 ## 4. 모호 그룹 분석 (test split)
 
