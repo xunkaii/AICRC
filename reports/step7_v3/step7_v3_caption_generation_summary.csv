@@ -1,0 +1,9 @@
+﻿metric,value
+n,9275
+pass_first,9275
+pass_after_retry,0
+fallback,0
+schema_faithfulness_rate,1.0
+fallback_rate,0.0
+mean_n_retries,0.0
+model_name,mock

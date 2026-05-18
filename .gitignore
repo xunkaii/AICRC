@@ -80,6 +80,8 @@ outputs/
 # reports/ IS committed (audit deliverables). Ignore only transient files.
 reports/_tmp/
 reports/*.bak
+# Scratch analysis dumps (한 번 분석용, 깃에 올리지 않음)
+reports/**/*.txt
 
 
 # --- Claude -------------------------------------------------------------
