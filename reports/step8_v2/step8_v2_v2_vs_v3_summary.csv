@@ -1,0 +1,40 @@
+﻿section,metric,v2,v3,delta
+overall,n_v2,9275,9275,
+overall,schema_faithfulness_rate,1,1,0
+overall,v3_under_v2_policy,,,0.0336
+diversity,unique_caption_ko,28,5514,5486
+diversity,caption_len_mean,107.6,214.2,106.5
+diversity,caption_len_median,109,227,118
+by_true_class,C1,1,1,
+by_true_class,C2,1,1,
+by_true_class,C3,1,1,
+by_true_class,C4,1,1,
+by_true_class,C5,1,1,
+by_true_class,C6,1,1,
+by_posture,SA,1,1,
+by_posture,CA,1,1,
+by_posture,HW,1,1,
+by_confidence,confident,1,1,
+by_confidence,hedged,1,1,
+by_confidence,low,1,1,
+by_confidence,no_call,1,1,
+clinical_vocab_density,좌측,0,0.3295,0.3295
+clinical_vocab_density,우측,0,0.4923,0.4923
+clinical_vocab_density,양측,0,0.4865,0.4865
+clinical_vocab_density,고관절,0,0.7859,0.7859
+clinical_vocab_density,골반,0,0.6039,0.6039
+clinical_vocab_density,무릎 정렬,0,0.3781,0.3781
+clinical_vocab_density,내회전,0,0.439,0.439
+clinical_vocab_density,내전,0,0.1667,0.1667
+clinical_vocab_density,발목 가동,0,0.4726,0.4726
+clinical_vocab_density,요추,0,0.1635,0.1635
+clinical_vocab_density,흉추,0,0.0386,0.0386
+clinical_vocab_density,척추 중립,0,0.2745,0.2745
+clinical_vocab_density,knee valgus,0,0,0
+clinical_vocab_density,posterior tilt,0,0,0
+error_code_violation_rate,biomech_claim,0,0,0.5694 (v3 under v2 policy)
+error_code_violation_rate,class_set_narrowing_pair,0,0,0.3295 (v3 under v2 policy)
+error_code_violation_rate,class_set_narrowing_pair_plus_c2,0,0,0.1680 (v3 under v2 policy)
+error_code_violation_rate,class_set_narrowing_within_group,0,0,0.4949 (v3 under v2 policy)
+error_code_violation_rate,direction_token,0,0,0.4865 (v3 under v2 policy)
+error_code_violation_rate,posture_phrase_missing,0,0,0.7457 (v3 under v2 policy)
