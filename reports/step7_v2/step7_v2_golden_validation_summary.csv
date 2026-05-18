@@ -6,4 +6,4 @@ fallback,0
 schema_faithfulness_rate,1.0
 fallback_rate,0.0
 mean_n_retries,0.0
-model_name,claude-sonnet-4-5
+model_name,mock

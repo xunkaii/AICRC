@@ -77,6 +77,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 SYS_PROMPT_MD = PROJECT_ROOT / "reports" / "step6_v2" / "step6_v2_final_system_prompt.md"
 GOLDEN_JSON = PROJECT_ROOT / "reports" / "step6_v2" / "step6_v2_golden_test_cases.json"
 SCHEMA_CSV = PROJECT_ROOT / "data" / "step4r" / "4rb_attention" / "step4r_bigru_attention_schema_outputs_calibrated.csv"
+CONSTRAINT_TEMPLATES_JSON = PROJECT_ROOT / "data" / "step4r" / "constraint_templates.json"
 
 OUTPUT_DATA_DIR = PROJECT_ROOT / "data" / "step7_v2"
 OUTPUT_REPORT_DIR = PROJECT_ROOT / "reports" / "step7_v2"
@@ -146,6 +147,9 @@ LIMITATION_PHRASE_POOL = [
     "손목 센서는 무릎 각도나 골반 움직임을 직접 측정하지 않습니다",
     "정확한 자세 평가는 영상 또는 전문가 평가와 함께 해석해 주십시오",
 ]
+
+with open(CONSTRAINT_TEMPLATES_JSON, "r", encoding="utf-8") as _f:
+    CONSTRAINT_TEMPLATES = json.load(_f)
 
 # Forbidden tokens (from step5_v2_forbidden_expressions.md §1 #1~#18)
 FORBIDDEN_EXACT = [
@@ -268,6 +272,13 @@ def build_user_payload(schema_row: dict) -> dict:
     nr = schema_row.get("no_call_reason", "") or ""
     if isinstance(nr, float):
         nr = ""
+    relevant_constraints = [
+        {"constraint_id": t["constraint_id"], "caption_safe_expression": t["caption_safe_expression"]}
+        for t in CONSTRAINT_TEMPLATES
+        if set(t["target_classes"]) & set(cs)
+    ]
+    if schema_row.get("no_call"):
+        relevant_constraints = []
     return {
         "task": "schema_to_korean_caption",
         "schema": {
@@ -285,6 +296,7 @@ def build_user_payload(schema_row: dict) -> dict:
         "confidence_phrase_pool": CONFIDENCE_PHRASE_POOL,
         "uncertainty_phrase_pool": UNCERTAINTY_PHRASE_POOL,
         "limitation_phrase_pool": LIMITATION_PHRASE_POOL,
+        "constraint_template": relevant_constraints,
     }
 
 

@@ -90,6 +90,14 @@
    `limitation_phrase` 어휘에 한정됩니다. 그 외 의학·생체역학 용어를
    새로 만들어 내지 마십시오.
 
+9. user payload에 `constraint_template`이 포함된 경우, 이는 *내부 배경 지식*입니다.
+   `constraint_template`의 의학·생체역학 원문을 caption 본문에 그대로 인용하지 마십시오.
+   `caption_safe_expression`에 적힌 표현만, schema의 `class_set` /
+   `caption_confidence_level` / `no_call`과 충돌하지 않는 범위에서만,
+   caption 본문에 선택적으로 풀어 쓸 수 있습니다.
+   constraint_template에 의존하여 schema에 없는 사실을 추가하거나
+   class_set을 좁히지 마십시오.
+
 [자주 사용할 안전 어구]
 - 손목 센서 기준 / 손목 센서 기준의 추정
 - 후보 / 후보군
@@ -145,3 +153,9 @@ JSON 외의 어떤 텍스트도 출력하지 마십시오.
 ---
 
 *본 문서는 prompt 본문 commit이며, LLM을 호출하지 않는다. caption도 만들지 않는다.*
+
+---
+
+## 변경 이력
+- 2026-05-15: §9 (constraint_template 사용 지침) 추가. CT-01~CT-10 주입 설계 반영.
+  연계 문서: reports/step4r/constraint_knowledge_template_design.md
